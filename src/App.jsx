@@ -65,7 +65,7 @@ function App() {
       <div className="w-full py-4 md:px-0  min-h-screen flex items-center justify-center relative">
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16 xl:gap-24 max-w-6xl w-full">
           {/* Left side - Title */}
-          <div className="flex flex-col relative">
+          <div className="flex flex-col relative gap-2">
             <div className="flex flex-col relative">
               <span className="text-white text-xs sm:text-sm tracking-wider absolute -top-2 right-0 font-[Kaisei_Decol]">Coming Soon</span>
               <h1 className="text-8xl lg:text-10xl xl:text-9xl text-pink-200 font-[Pinyon_Script] text-left relative">Cherry</h1>
