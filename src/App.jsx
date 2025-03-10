@@ -62,7 +62,7 @@ function App() {
         </div>
       )}
       {/* Hero Section */}
-      <div className="w-full py-4 md:px-0  min-h-screen flex items-center justify-center relative">
+      <div className="w-full py-8 md:px-0  min-h-screen flex items-center justify-center relative">
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16 xl:gap-24 max-w-6xl w-full">
           {/* Left side - Title */}
           <div className="flex flex-col relative gap-2">
