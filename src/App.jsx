@@ -52,6 +52,7 @@ function App() {
 
   return (
     <div className="min-h-screen w-screen bg-[url('/BG.png')] bg-cover bg-center bg-no-repeat bg-fixed">
+      
       {/* Toast Notification */}
       {showToast && (
         <div
@@ -61,10 +62,10 @@ function App() {
         </div>
       )}
       {/* Hero Section */}
-      <div className="w-full px-4 py-12 md:py-24 min-h-screen flex items-center justify-center relative">
+      <div className="w-full py-4 md:px-0  min-h-screen flex items-center justify-center relative">
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16 xl:gap-24 max-w-6xl w-full">
           {/* Left side - Title */}
-          <div className="flex flex-col gap-4 relative">
+          <div className="flex flex-col relative">
             <div className="flex flex-col relative">
               <span className="text-white text-xs sm:text-sm tracking-wider absolute -top-2 right-0 font-[Kaisei_Decol]">Coming Soon</span>
               <h1 className="text-8xl lg:text-10xl xl:text-9xl text-pink-200 font-[Pinyon_Script] text-left relative">Cherry</h1>
@@ -95,8 +96,8 @@ function App() {
           
           {/* Right side - Phone Demo */}
           <div className="flex justify-center mt-8 md:mt-0">
-            <div className="w-52 md:w-72 h-[450px] md:h-[600px]">
-              <img src="/Screenshot.png" alt="Cherry App Demo" className="w-full h-full object-cover" />
+            <div className="w-full  md:w-80 h-[700px] md:h-[700px]">
+              <img src="/Screenshot.png" alt="Cherry App Demo" className="w-full h-full object-contain" />
             </div>
           </div>
         </div>
@@ -125,24 +126,24 @@ function App() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Feature 1 */}
-            <div className="bg-black/50 md:bg-transparent p-8 rounded-xl md:rounded-none backdrop-blur-sm text-center">
-              <h3 className="text-lg md:text-xl font-bold text-white mb-3 md:mb-4 font-[Kaisei_Decol]">Create Your Own</h3>
-              <LuPencil className="w-8 h-8 md:w-10 md:h-10 mx-auto my-4 md:my-6 text-[#B87CED]" />
-              <p className="text-white font-[Kaisei_Decol] text-sm md:text-md">Tailor and customize your own story</p>
+            <div className="bg-white/10 md:bg-transparent p-6 rounded-full md:rounded-none backdrop-blur-sm text-center w-[280px] h-[280px] mx-auto flex flex-col items-center justify-center md:w-auto md:h-auto md:p-8 md:block">
+              <h3 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-4 font-[Kaisei_Decol]">Customization</h3>
+              <LuPencil className="w-10 h-10 md:w-10 md:h-10 mx-auto my-3 md:my-6 text-[#B87CED]" />
+              <p className="text-white font-[Comme] text-sm md:text-md">Unleash your creativity,<br/>craft the perfect story</p>
             </div>
 
             {/* Feature 2 */}
-            <div className="bg-black/50 md:bg-transparent p-8 rounded-xl md:rounded-none backdrop-blur-sm text-center">
-              <h3 className="text-lg md:text-xl font-bold text-white mb-3 md:mb-4 font-[Kaisei_Decol]">NSFW Content</h3>
-              <FaPepperHot className="w-8 h-8 md:w-10 md:h-10 mx-auto my-4 md:my-6 text-[#B87CED]" />
-              <p className="text-white font-[Kaisei_Decol] text-sm md:text-md">Zero boundaries, endless possibilities</p>
+            <div className="bg-white/10 md:bg-transparent p-6 rounded-full md:rounded-none backdrop-blur-sm text-center w-[280px] h-[280px] mx-auto flex flex-col items-center justify-center md:w-auto md:h-auto md:p-8 md:block">
+              <h3 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-4 font-[Kaisei_Decol]">NSFW Content</h3>
+              <FaPepperHot className="w-10 h-10 md:w-10 md:h-10 mx-auto my-3 md:my-6 text-[#B87CED]" />
+              <p className="text-white font-[Comme] text-sm md:text-md">Zero boundaries,<br/> endless possibilities</p>
             </div>
 
             {/* Feature 3 */}
-            <div className="bg-black/50 md:bg-transparent  p-8 rounded-xl md:rounded-none backdrop-blur-sm text-center">
-              <h3 className="text-lg md:text-xl font-bold text-white mb-3 md:mb-4 font-[Kaisei_Decol]">Infinite Experiences</h3>
-              <FaPeopleGroup className="w-8 h-8 md:w-10 md:h-10 mx-auto my-4 md:my-6 text-[#B87CED]" />
-              <p className="text-white font-[Kaisei_Decol] text-sm md:text-md">Read and remix from the community</p>
+            <div className="bg-white/10 md:bg-transparent p-6 rounded-full md:rounded-none backdrop-blur-sm text-center w-[280px] h-[280px] mx-auto flex flex-col items-center justify-center md:w-auto md:h-auto md:p-8 md:block">
+              <h3 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-4 font-[Kaisei_Decol]">Unlimited Experiences</h3>
+              <FaPeopleGroup className="w-10 h-10 md:w-10 md:h-10 mx-auto my-3 md:my-6 text-[#B87CED]" />
+              <p className="text-white font-[Comme] text-sm md:text-md">Read and remix from <br/> community stories</p>
             </div>
           </div>
         </div>
