@@ -6,9 +6,7 @@ export default {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        'pinyon': ['Pinyon Script', 'cursive'],
-      },
+      fontFamily: {}
     },
   },
   plugins: [],
