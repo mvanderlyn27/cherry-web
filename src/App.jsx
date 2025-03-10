@@ -66,8 +66,8 @@ function App() {
           {/* Left side - Title */}
           <div className="flex flex-col gap-4 relative">
             <div className="flex flex-col relative">
-              <span className="text-white text-xs sm:text-sm tracking-wider absolute top-1 -right-4 font-[Kaisei_Decol]">Coming Soon</span>
-              <h1 className="text-8xl lg:text-10xl xl:text-9xl text-pink-200 font-[Pinyon_Script] text-left">Cherry</h1>
+              <span className="text-white text-xs sm:text-sm tracking-wider absolute -top-2 right-0 font-[Kaisei_Decol]">Coming Soon</span>
+              <h1 className="text-8xl lg:text-10xl xl:text-9xl text-pink-200 font-[Pinyon_Script] text-left relative">Cherry</h1>
             </div>
             <p className="text-lg md:text-xl text-white mb-6 md:mb-8 text-left font-[Kaisei_Decol]">Love, Drama, Desire<br/>—Your Choices Write the Story.</p>
             <p className="text-sm md:text-md text-white font-light mb-6 md:mb-8 text-left font-[Comme]">Join our waitlist to gain exclusive early access.</p>
@@ -85,7 +85,7 @@ function App() {
               {success && <p className="text-green-400 text-sm">Successfully joined the waitlist!</p>}
               <button
                 type="submit"
-                className="font-[Comme] text-sm text-light cursor-pointer bg-white text-[#B87CED] px-8 py-3 md:p-2 md:px-8 rounded-full  transition-colors shadow-[0_0_20px_3px_rgba(168,85,247,0.5)] hover:shadow-[0_0_20px_3px_rgba(168,85,247,0.7)] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="font-[Comme] text-sm text-light cursor-pointer bg-white text-[#B87CED] px-8 py-3 md:p-2 md:px-8 rounded-full transition-all duration-700 animate-[pulse-glow_2s_ease-in-out_infinite] hover:pause-animation hover:shadow-[0_0_20px_3px_rgba(168,85,247,0.7)] hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:animate-none"
                 disabled={isLoading}
               >
                 {isLoading ? 'JOINING...' : 'JOIN NOW'}
@@ -95,18 +95,18 @@ function App() {
           
           {/* Right side - Phone Demo */}
           <div className="flex justify-center mt-8 md:mt-0">
-            <div className="w-52 md:w-64 h-[450px] md:h-[600px]">
-              <img src="/Screenshot.png" alt="Cherry App Demo" className="w-full h-full object-cover rounded-3xl shadow-2xl" />
+            <div className="w-52 md:w-72 h-[450px] md:h-[600px]">
+              <img src="/Screenshot.png" alt="Cherry App Demo" className="w-full h-full object-cover" />
             </div>
           </div>
         </div>
         {/* Scroll Down Button - Only visible on md screens and above */}
         <button 
           onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-          className="absolute bottom-10 text-white/80 hover:text-white transition-colors hidden md:block"
+          className="absolute bottom-10  text-white hidden md:block"
           aria-label="Scroll down for more content"
         >
-          <div className="animate-bounce bg-purple-500/30 hover:bg-[#B87CED] rounded-full p-2 backdrop-blur-sm">
+          <div className=" hover:scale-115 transition-all duration-300 shadow-[0_0_20px_3px_rgba(128,128,128,0.3)]  cursor-pointer rounded-full p-2 backdrop-blur-sm">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
