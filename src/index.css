@@ -1,2 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Comme:wght@100..900&family=Kaisei+Decol&family=Pinyon+Script&display=swap");
 
+/* Add this to your existing CSS file */
+.swiper-custom-bullet {
+  width: 8px !important;
+  height: 8px !important;
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  opacity: 1 !important;
+  transition: all 0.3s ease !important;
+}
+
+.swiper-custom-bullet-active {
+  width: 16px !important;
+  background-color: #B87CED !important;
+  border-radius: 4px !important;
+}
+
+.swiper-pagination {
+  bottom: 20px !important;
+}

@@ -2,7 +2,11 @@ import { useState, FormEvent } from "react";
 import { LuPencil } from "react-icons/lu";
 import { FaPepperHot } from "react-icons/fa";
 import { FaPeopleGroup } from "react-icons/fa6";
+import { LuLibraryBig } from "react-icons/lu";
 import { toast } from "sonner";
+
+// Add this import at the top
+import { SwipeableCarousel } from "@/components/SwipeableCarousel";
 
 export function Home() {
   const [email, setEmail] = useState<string>("");
@@ -43,54 +47,56 @@ export function Home() {
     }
   };
 
+  // Add this array near the top of the component
+  const demoImages = ["/home/Screenshot1.png", "/home/Screenshot2.png", "/home/Screenshot3.png"];
+
   return (
-    <div className="min-h-screen w-screen bg-[url('/BG.png')] bg-cover bg-center bg-no-repeat bg-fixed">
+    <div className="min-h-screen w-screen overflow-x-hidden bg-[url('/BG.png')] bg-cover bg-center bg-no-repeat bg-fixed">
       {/* Hero Section */}
-      <div className="w-full py-8 md:px-0  min-h-screen flex items-center justify-center relative">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16 xl:gap-24 max-w-6xl w-full">
+      <div className="w-full py-8 px-4 md:px-0 min-h-screen flex items-center justify-center relative">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-8 xl:gap-8 max-w-6xl w-full">
           {/* Left side - Title */}
-          <div className="flex flex-col relative gap-2">
-            <div className="flex flex-col relative">
-              <span className="text-white text-xs sm:text-sm tracking-wider absolute -top-2 right-0 font-[Kaisei_Decol]">
-                Coming Soon
-              </span>
-              <h1 className="text-8xl lg:text-10xl xl:text-9xl text-pink-200 font-[Pinyon_Script] text-left relative">
+          <div className="w-full flex flex-col relative gap-4 px-4 md:px-0">
+            <div className="w-fit relative">
+              <h1 className="text-8xl md:text-9xl lg:text-13xl xl:text-15xl text-[#F5CCFF] font-[Pinyon_Script] text-left">
                 Cherry
               </h1>
+              <span className="absolute top-0 -right-18 text-white text-xs sm:text-sm tracking-wider font-[Kaisei_Decol]">
+                Coming Soon
+              </span>
             </div>
-            <p className="text-lg md:text-xl text-white mb-6 md:mb-8 text-left font-[Kaisei_Decol]">
+            <p className="text-md md:text-lg lg:text-xl xl:text-2xl text-white mb-6 md:mb-8 text-left font-[Kaisei_Decol]">
               Love, Drama, Desire
               <br />
-              —Your Choices Write the Story.
+              <br />
+              —Experience romantic stories like never before.
             </p>
-            <p className="text-sm md:text-md text-white font-light mb-6 md:mb-8 text-left font-[Comme]">
+            <p className="text-sm md:text-md lg:text-lg xl:text-xl text-white font-light mb-6 md:mb-8 text-left font-[Comme]">
               Join our waitlist to gain exclusive early access.
             </p>
-            <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-4 w-full max-w-full ">
+            <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-4 w-full max-w-full px-0">
               <input
                 type="text"
                 placeholder="Enter email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="font-[Comme] bg-transparent border border-[#B87CED] text-white px-4 py-2 md:p-2 rounded-full placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full md:w-auto font-[Comme] bg-transparent border border-[#B87CED] text-white px-4 py-2 md:p-2 rounded-full placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500"
                 disabled={isLoading}
               />
               {error && <p className="text-red-400 text-sm">{error}</p>}
               {success && <p className="text-green-400 text-sm">Successfully joined the waitlist!</p>}
               <button
                 type="submit"
-                className="font-[Comme] text-sm text-light cursor-pointer bg-white text-[#B87CED] px-8 py-3 md:p-2 md:px-8 rounded-full transition-all duration-700 animate-[pulse-glow_2s_ease-in-out_infinite] hover:pause-animation hover:shadow-[0_0_20px_3px_rgba(168,85,247,0.7)] hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:animate-none"
+                className="font-[Comme] text-sm text-light cursor-pointer bg-white text-[#B87CED] px-8 py-3 md:p-2 md:px-8 rounded-full transition-shadow duration-1500 animate-[pulse-glow_2s_ease-in-out_infinite] hover:pause-animation hover:shadow-[0_0_20px_3px_rgba(168,85,247,0.7)] hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:animate-none whitespace-nowrap"
                 disabled={isLoading}>
                 {isLoading ? "JOINING..." : "JOIN NOW"}
               </button>
             </form>
           </div>
-
-          {/* Right side - Phone Demo */}
-          <div className="flex justify-center mt-8 md:mt-0">
-            <div className="w-full  md:w-80 h-[700px] md:h-[700px]">
-              <img src="/Screenshot.png" alt="Cherry App Demo" className="w-full h-full object-contain" />
+          <div className="w-full md:w-full h-[700px] md:h-[700px] relative">
+            <div className="absolute inset-0 rounded-3xl ">
+              <SwipeableCarousel images={demoImages} interval={4000} />
             </div>
           </div>
         </div>
@@ -119,13 +125,11 @@ export function Home() {
             {/* Feature 1 */}
             <div className="bg-white/10 md:bg-transparent p-6 rounded-full md:rounded-none backdrop-blur-sm text-center w-[280px] h-[280px] mx-auto flex flex-col items-center justify-center md:w-auto md:h-auto md:p-8 md:block">
               <h3 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-4 font-[Kaisei_Decol]">
-                Customization
+                Unlimited Stories
               </h3>
-              <LuPencil className="w-10 h-10 md:w-10 md:h-10 mx-auto my-3 md:my-6 text-[#B87CED]" />
+              <LuLibraryBig className="w-10 h-10 md:w-10 md:h-10 mx-auto my-3 md:my-6 text-[#B87CED]" />
               <p className="text-white font-[Comme] text-sm md:text-md">
-                Unleash your creativity,
-                <br />
-                craft the perfect story
+                Read from thousands of curated <br /> or community stories
               </p>
             </div>
 
@@ -138,15 +142,16 @@ export function Home() {
                 <br /> endless possibilities
               </p>
             </div>
-
             {/* Feature 3 */}
             <div className="bg-white/10 md:bg-transparent p-6 rounded-full md:rounded-none backdrop-blur-sm text-center w-[280px] h-[280px] mx-auto flex flex-col items-center justify-center md:w-auto md:h-auto md:p-8 md:block">
               <h3 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-4 font-[Kaisei_Decol]">
-                Unlimited Experiences
+                Full Customization
               </h3>
-              <FaPeopleGroup className="w-10 h-10 md:w-10 md:h-10 mx-auto my-3 md:my-6 text-[#B87CED]" />
+              <LuPencil className="w-10 h-10 md:w-10 md:h-10 mx-auto my-3 md:my-6 text-[#B87CED]" />
               <p className="text-white font-[Comme] text-sm md:text-md">
-                Read and remix from <br /> community stories
+                <br />
+                Choose what happens and
+                <br /> shape your own story
               </p>
             </div>
           </div>
