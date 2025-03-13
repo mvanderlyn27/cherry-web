@@ -8,13 +8,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import ImagePreview from "./ImagePreview";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { generateShareImage } from "@/lib/utils/share-image";
 
 interface ShareableImageProps {
@@ -41,7 +35,7 @@ export const ShareableImage = ({
   mainTitle,
   description,
   storyText,
-  websiteUrl = "cherryapp.vercel.app",
+  websiteUrl = "cherryromance.vercel.app",
   fileName = "my-result.png",
 }: ShareableImageProps) => {
   const [generatedImageUrl, setGeneratedImageUrl] = useState<string>("");
@@ -53,7 +47,7 @@ export const ShareableImage = ({
       const response = await fetch(imageUrl);
       const blob = await response.blob();
       const file = new File([blob], fileName, { type: blob.type });
-      
+
       if (navigator.share) {
         await navigator.share({
           files: [file],
@@ -61,8 +55,8 @@ export const ShareableImage = ({
         });
       }
     } catch (error) {
-      console.error('Sharing failed:', error);
-      toast.error('Could not share image');
+      console.error("Sharing failed:", error);
+      toast.error("Could not share image");
     }
   };
 
@@ -79,20 +73,20 @@ export const ShareableImage = ({
         title,
         mainTitle,
         description,
-        websiteUrl
+        websiteUrl,
       });
-      
+
       setGeneratedImageUrl(dataUrl);
       setIsGenerating(false);
-      
+
       if (isMobile()) {
         handleShare(dataUrl);
       } else {
         setIsOpen(true);
       }
     } catch (error) {
-      console.error('Image generation failed:', error);
-      toast.error('Failed to generate shareable image');
+      console.error("Image generation failed:", error);
+      toast.error("Failed to generate shareable image");
       setIsGenerating(false);
     }
   };
@@ -100,26 +94,16 @@ export const ShareableImage = ({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <ShareButton 
-          isLoading={isGenerating}
-          onClick={handleGenerate}
-        />
+        <ShareButton isLoading={isGenerating} onClick={handleGenerate} />
       </DialogTrigger>
 
-      <ShareDialogContent 
-        imageUrl={generatedImageUrl}
-        fileName={fileName}
-        onClose={() => setIsOpen(false)}
-      />
+      <ShareDialogContent imageUrl={generatedImageUrl} fileName={fileName} onClose={() => setIsOpen(false)} />
     </Dialog>
   );
 };
 
 // New component for the share button
-const ShareButton = ({ isLoading, onClick }: { 
-  isLoading: boolean; 
-  onClick: () => void 
-}) => (
+const ShareButton = ({ isLoading, onClick }: { isLoading: boolean; onClick: () => void }) => (
   <button
     onClick={onClick}
     disabled={isLoading}
@@ -141,7 +125,11 @@ const ShareButton = ({ isLoading, onClick }: {
 );
 
 // New component for dialog content
-const ShareDialogContent = ({ imageUrl, fileName, onClose }: {
+const ShareDialogContent = ({
+  imageUrl,
+  fileName,
+  onClose,
+}: {
   imageUrl: string;
   fileName: string;
   onClose: () => void;
@@ -167,13 +155,7 @@ const SpinnerIcon = () => (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24">
-    <circle
-      className="opacity-25"
-      cx="12"
-      cy="12"
-      r="10"
-      stroke="currentColor"
-      strokeWidth="4"></circle>
+    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
     <path
       className="opacity-75"
       fill="currentColor"
@@ -206,11 +188,7 @@ const DownloadButton = ({ imageUrl, fileName }: { imageUrl: string; fileName: st
       link.click();
     }}
     className="flex items-center px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-5 w-5 mr-2"
-      viewBox="0 0 20 20"
-      fill="currentColor">
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
       <path
         fillRule="evenodd"
         d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
@@ -228,21 +206,17 @@ const CopyButton = ({ imageUrl }: { imageUrl: string }) => (
         const response = await fetch(imageUrl);
         const blob = await response.blob();
         const item = new ClipboardItem({
-          [blob.type]: blob
+          [blob.type]: blob,
         });
         await navigator.clipboard.write([item]);
         toast.success("Image copied to clipboard");
       } catch (error) {
-        console.error('Failed to copy image:', error);
+        console.error("Failed to copy image:", error);
         toast.error("Could not copy image to clipboard");
       }
     }}
     className="flex items-center px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-5 w-5 mr-2"
-      viewBox="0 0 20 20"
-      fill="currentColor">
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
       <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
       <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
     </svg>
