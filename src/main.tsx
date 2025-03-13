@@ -4,17 +4,18 @@ import { PostHogProvider } from "posthog-js/react";
 import { Toaster } from "@/components/ui/sonner";
 import "./index.css";
 import App from "./App";
-
-const options = {
-  api_host: import.meta.env.VITE_POSTHOG_HOST as string,
-};
+import posthog from "posthog-js";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("Failed to find the root element");
+const client = posthog.init(import.meta.env.VITE_POSTHOG_KEY as string, {
+  api_host: import.meta.env.VITE_POSTHOG_HOST as string,
+});
+console.log("client", client);
 
 createRoot(rootElement).render(
   <StrictMode>
-    <PostHogProvider apiKey={import.meta.env.VITE_POSTHOG_KEY as string} options={options}>
+    <PostHogProvider client={client}>
       <App />
       <Toaster />
     </PostHogProvider>

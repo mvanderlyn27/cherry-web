@@ -7,6 +7,7 @@ import { toast } from "sonner";
 
 // Add this import at the top
 import { SwipeableCarousel } from "@/components/SwipeableCarousel";
+import posthog from "posthog-js";
 
 export function Home() {
   const [email, setEmail] = useState<string>("");
@@ -19,6 +20,9 @@ export function Home() {
     setIsLoading(true);
     setError("");
     setSuccess(false);
+
+    // Track form submission attempt
+    posthog.capture("waitlist_submit_attempt", { email });
 
     try {
       const formBody = `email=${encodeURIComponent(email)}&mailingLists=${encodeURIComponent(
@@ -39,8 +43,15 @@ export function Home() {
       setSuccess(true);
       setEmail("");
 
+      // Track successful submission
+      posthog.capture("waitlist_submit_success", { email });
       toast("Successfully joined the waitlist!");
     } catch (err) {
+      // Track submission error
+      posthog.capture("waitlist_submit_error", {
+        email,
+        error: err instanceof Error ? err.message : "Unknown error",
+      });
       setError("Failed to join waitlist. Please try again.");
     } finally {
       setIsLoading(false);

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Quiz, QuizResult, LoadingResults } from "../../components/quiz";
 import { Question, QuizAnswers } from "../../components/quiz/types";
+import posthog from "posthog-js";
 
 // Main form component
 export const MyTypeOfMan = () => {
@@ -16,29 +17,39 @@ export const MyTypeOfMan = () => {
 
   // Load saved answers from localStorage on component mount
   useEffect(() => {
+    // Track quiz page view
+    posthog.capture("quiz_page_view");
+
     const savedAnswers = localStorage.getItem("cherryQuizAnswers");
     const savedResult = localStorage.getItem("cherryQuizResult");
     const savedManType = localStorage.getItem("cherryManType");
     const savedManImage = localStorage.getItem("cherryManImage");
     const savedManDescription = localStorage.getItem("cherryManDescription");
+    const savedAdjective1 = localStorage.getItem("cherryAdjective1");
+    const savedAdjective2 = localStorage.getItem("cherryAdjective2");
+    const savedMaxChar = localStorage.getItem("cherryMaxChar");
 
-    if (savedAnswers) {
+    if (
+      savedAnswers &&
+      savedResult &&
+      savedManType &&
+      savedManImage &&
+      savedManDescription &&
+      savedAdjective1 &&
+      savedAdjective2 &&
+      savedMaxChar
+    ) {
       try {
         const parsedAnswers = JSON.parse(savedAnswers);
         setQuizAnswers(parsedAnswers);
-
-        // If we have saved results, show them
-        if (savedResult && savedManType && savedManImage && savedManDescription) {
-          setQuizResult(savedResult);
-          setManType(savedManType);
-          setManImage(savedManImage);
-          setManDescription(savedManDescription);
-          setShowResult(true);
-        }
+        setQuizResult(savedResult);
+        setManType("A " + savedAdjective1 + " but " + savedAdjective2 + " " + savedManType);
+        setManImage(savedManImage);
+        setManDescription(savedManDescription);
+        setShowResult(true);
       } catch (error) {
-        console.error("Error parsing saved quiz answers:", error);
-        // Clear invalid data
-        localStorage.removeItem("cherryQuizAnswers");
+        console.error("Error loading saved quiz data:", error);
+        handleRestart(); // Clear everything if there's an error
       }
     }
   }, []);
@@ -46,62 +57,95 @@ export const MyTypeOfMan = () => {
   // Quiz questions
   const questions: Question[] = [
     {
-      id: "personality",
-      type: "multipleChoice",
-      question: "What personality traits do you find most attractive?",
-      options: [
-        { label: "Confident and assertive", value: "confident" },
-        { label: "Kind and compassionate", value: "kind" },
-        { label: "Mysterious and brooding", value: "mysterious" },
-        { label: "Funny and lighthearted", value: "funny" },
-      ],
+      id: "name",
+      type: "textInput",
+      question: "What's your name?",
     },
     {
-      id: "physique",
+      id: "ageRange",
       type: "multipleChoice",
-      question: "What physical attributes catch your eye?",
+      question: "What is your age range?",
       options: [
-        { label: "Tall and athletic", value: "athletic" },
-        { label: "Rugged and strong", value: "rugged" },
-        { label: "Lean and elegant", value: "lean" },
-        { label: "Cuddly and comfortable", value: "cuddly" },
+        { label: "Under 20", value: "under_20" },
+        { label: "21 to 30", value: "20_30" },
+        { label: "31 to 40", value: "30_40" },
+        { label: "41 to 50", value: "40_50" },
+        { label: "51+", value: "50+" },
       ],
     },
     {
       id: "style",
       type: "imageChoice",
-      question: "Which style do you prefer?",
+      question: "Which aesthetic attracts you the most?",
       options: [
-        { label: "Classic", value: "classic", image: "/quiz/style-classic.jpg" },
-        { label: "Casual", value: "casual", image: "/quiz/style-casual.jpg" },
-        { label: "Edgy", value: "edgy", image: "/quiz/style-edgy.jpg" },
-        { label: "Professional", value: "professional", image: "/quiz/style-professional.jpg" },
-        { label: "Artistic", value: "artistic", image: "/quiz/style-artistic.jpg" },
-        { label: "Athletic", value: "athletic", image: "/quiz/style-athletic.jpg" },
+        { label: "Flower", value: "abcd", image: "/quiz/aesthetic/flower.jpg" },
+        { label: "Tie", value: "efgh", image: "/quiz/aesthetic/tie.jpg" },
+        { label: "Glass", value: "ijk", image: "/quiz/aesthetic/glass.jpg" },
+        { label: "Chain", value: "lmn", image: "/quiz/aesthetic/chain.jpg" },
       ],
     },
     {
-      id: "scenario",
-      type: "multipleChoice",
-      question: "What scenario would you most enjoy with your ideal partner?",
+      id: "trope",
+      type: "multiSelect",
+      question: "What romance tropes do you secretly love? Select all that apply.",
       options: [
-        { label: "A quiet evening at home", value: "quiet" },
-        { label: "An adventurous outdoor activity", value: "adventure" },
-        { label: "A sophisticated dinner date", value: "dinner" },
-        { label: "Dancing the night away", value: "dancing" },
+        { label: "Enemies to lovers", value: "aeghjlm" },
+        { label: "Friends to lovers", value: "bcgkl" },
+        { label: "Soulmates", value: "bdgjkn" },
+        { label: "Forbidden Love", value: "dfhijkmn" },
+        { label: "Fake/Arranged Relationship", value: "acefikmn" },
       ],
     },
     {
-      id: "archetype",
+      id: "animal",
       type: "imageChoice",
-      question: "Which of these men appeals to you most?",
+      question: "If your love interest was an animal, which image fits him the most?",
       options: [
-        { label: "The CEO", value: "ceo", image: "/quiz/man-ceo.jpg" },
-        { label: "The Artist", value: "artist", image: "/quiz/man-artist.jpg" },
-        { label: "The Athlete", value: "athlete", image: "/quiz/man-athlete.jpg" },
-        { label: "The Bad Boy", value: "badboy", image: "/quiz/man-badboy.jpg" },
-        { label: "The Intellectual", value: "intellectual", image: "/quiz/man-intellectual.jpg" },
-        { label: "The Outdoorsman", value: "outdoorsman", image: "/quiz/man-outdoorsman.jpg" },
+        { label: "Lion", value: "aejlm", image: "/quiz/animal/lion.jpg" },
+        { label: "Cat", value: "bg", image: "/quiz/animal/cat.jpg" },
+        { label: "Horse", value: "dfk", image: "/quiz/animal/horse.jpg" },
+        { label: "Eagle", value: "chin", image: "/quiz/animal/eagle.jpg" },
+      ],
+    },
+    {
+      id: "vibe",
+      type: "imageChoice",
+      allowMultiple: true,
+      question: "Which images below speak to you the most? Select all that apply.",
+      options: [
+        { label: "Roses", value: "bdegijkn", image: "/quiz/vibe/roses.jpg" },
+        { label: "Knife", value: "afhjmn", image: "/quiz/vibe/knife.jpg" },
+        { label: "Cats", value: "abceghil", image: "/quiz/vibe/cats.jpg" },
+        { label: "Diamonds", value: "eijm", image: "/quiz/vibe/diamonds.jpg" },
+        { label: "Mist", value: "acdefhjln", image: "/quiz/vibe/mist.jpg" },
+      ],
+    },
+    {
+      id: "food",
+      type: "imageChoice",
+      question: "If you were to share a kind of food with your love interest, which would you choose?",
+      options: [
+        { label: "Milk Chocolate", value: "Sweet", image: "/quiz/food/milkChocolate.png" },
+        { label: "Bbq Wings", value: "Spicy", image: "/quiz/food/bbqWings.png" },
+        { label: "Pizza", value: "Crazy", image: "/quiz/food/pizza.png" },
+        { label: "Marshmallow", value: "Soft", image: "/quiz/food/marshmallow.png" },
+        { label: "Bread", value: "Silly", image: "/quiz/food/bread.png" },
+        { label: "Boiled Egg", value: "Grumpy", image: "/quiz/food/boiledEgg.png" },
+      ],
+    },
+    {
+      id: "drink",
+      type: "imageChoice",
+      question: "If you were to share a drink with your love interest, which would you choose?",
+      options: [
+        { label: "Warm Water", value: "Stoic", image: "/quiz/drink/water.png" },
+        { label: "Soda", value: "Rebellios", image: "/quiz/drink/soda.png" },
+        { label: "Whiskey", value: "Broken", image: "/quiz/drink/whiskey.png" },
+        { label: "Beer", value: "Cocky", image: "/quiz/drink/beer.png" },
+        { label: "Coffee", value: "Obsessive", image: "/quiz/drink/coffee.png" },
+        { label: "Cocktail", value: "Dramatic", image: "/quiz/drink/cocktail.png" },
+        { label: "Champagne", value: "Flirty", image: "/quiz/drink/champagne.png" },
+        { label: "Green Tea", value: "Loayl", image: "/quiz/drink/greenTea.png" },
       ],
     },
   ];
@@ -152,62 +196,162 @@ export const MyTypeOfMan = () => {
     },
   };
 
-  const generateResults = async () => {
+  const generateResults = async (answers: QuizAnswers) => {
     setIsLoading(true);
     setShowResult(true);
 
-    try {
-      // Determine man type based on archetype answer
-      const selectedArchetype = quizAnswers.archetype || "intellectual"; // Default fallback
-      const selectedManType = manTypes[selectedArchetype as keyof typeof manTypes];
+    // Add more detailed logging
+    console.log("Starting generateResults with answers:", answers);
+    console.log("Quiz answers type:", typeof answers);
+    console.log("Quiz answers keys:", Object.keys(answers));
 
-      setManType(selectedManType.title);
-      setManImage(selectedManType.image);
-      setManDescription(selectedManType.description);
+    // Track quiz completion attempt
+    posthog.capture("quiz_completion_attempt");
+
+    try {
+      // Initialize results object with all possible characters
+      const results = { a: 0, b: 0, c: 0, d: 0, e: 0, f: 0, g: 0, h: 0, i: 0, j: 0, k: 0, l: 0, m: 0, n: 0 };
+      const archetypes = {
+        a: "Bully",
+        b: "Childhood Sweetheard",
+        c: "Brother's Popular Friend",
+        d: "Artist",
+        e: "Billionaire",
+        f: "Commander",
+        g: "Intellectual",
+        h: "Assassin",
+        i: "Star",
+        j: "Vampire Prince",
+        k: "Knight",
+        l: "Biker",
+        m: "Mafia Boss",
+        n: "Alpha Wolf",
+      };
+      const valuesIds = ["style", "trope", "animal", "vibe"];
+
+      console.log("quiz answers", quizAnswers);
+      // Loop through each question ID
+      for (const id of valuesIds) {
+        const answer = answers[id];
+        console.log(`Processing ${id}:`, answer); // Debug log
+
+        if (answer) {
+          // If it's a multi-select answer, it will be comma-separated
+          const values = answer.split(",");
+
+          // Process each selected value
+          for (const value of values) {
+            // Add a point for each character in the value
+            for (const char of value) {
+              if (char in results) {
+                results[char as keyof typeof results]++;
+                console.log(`Added point for ${char} from ${id}`); // Debug log
+              }
+            }
+          }
+        }
+      }
+      // Find the character with the highest score
+      const maxChar = Object.entries(results).reduce(
+        (max, [char, count]) => (count > results[max as keyof typeof results] ? char : max),
+        "a"
+      );
+      console.log("Character with highest score:", maxChar, "Score:", results[maxChar as keyof typeof results]);
+      console.log("Corresponding archetype:", archetypes[maxChar as keyof typeof archetypes]);
+      const userName = answers["name"];
+      const selectedManType = archetypes[maxChar as keyof typeof archetypes];
+      const adjective1 = answers["food"];
+      const adjective2 = answers["drink"];
+      //need to put answers into buckets here
+
+      setManType("A " + adjective1 + " but " + adjective2 + " " + selectedManType);
+      const selectedManImage = "/quiz/results/" + maxChar.toUpperCase() + ".jpg";
+      console.log("selectedManImage", selectedManImage);
+      setManImage(selectedManImage);
+      const selectedManDescription = "He's Cool, this should be generated later";
+      setManDescription(selectedManDescription);
 
       // Generate story with Gemini API
       const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY as string);
       const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-lite" });
 
       const prompt = `
-        Create a short romantic story snippet (about 3-4 paragraphs) about a woman meeting her ideal man. 
-        Use these details about her preferences:
-        - Personality: ${quizAnswers.personality || "mysterious"}
-        - Physical attributes: ${quizAnswers.physique || "athletic"}
-        - Style: ${quizAnswers.style || "classic"}
-        - Ideal scenario: ${quizAnswers.scenario || "quiet"}
-        - Type: ${selectedManType.title}
+        Create an exciting hook for a romantic story (3-4 paragraphs) about ${
+          userName || "a woman"
+        } meeting her perfect match. 
+        Use these quiz results to craft a compelling narrative:
+
+        Core Character Type: ${selectedManType}
+        Personality Traits: ${adjective1} and ${adjective2}
+        Preferred Aesthetic: ${quizAnswers.style}
+        Favorite Romance Tropes: ${quizAnswers.trope}
+        Spirit Animal: ${quizAnswers.animal}
+        Resonating Imagery: ${quizAnswers.vibe}
         
-        Make the story sensual and engaging, with vivid descriptions. Start with an initial meeting and end with romantic tension.
-        Don't use placeholder names - give the characters actual names. Make the story feel like the beginning of a romance novel.
+        Additional Context:
+        - Age Range: ${quizAnswers.ageRange}
+        - Drink of Choice: ${quizAnswers.drink}
+        - Food Preference: ${quizAnswers.food}
+
+        Writing Guidelines:
+        - Start with a strong, attention-grabbing first sentence
+        - Build immediate romantic tension
+        - Incorporate the selected tropes and imagery naturally
+        - Use vivid, sensory descriptions
+        - Create a clear personality for both characters based on the quiz choices
+        - End with a hook that makes the reader want more
+        - Give the love interest a name that matches their archetype
+        - Make it feel like the opening of an addictive romance novel
       `;
 
       const result = await model.generateContent(prompt);
       const text = result.response.text();
       console.log("story", text);
-      setQuizResult(text);
-
-      // Save results to localStorage
-      localStorage.setItem("cherryQuizAnswers", JSON.stringify(quizAnswers));
+      // Save all results to localStorage with consistent naming
+      localStorage.setItem("cherryQuizAnswers", JSON.stringify(answers));
       localStorage.setItem("cherryQuizResult", text);
-      localStorage.setItem("cherryManType", selectedManType.title);
-      localStorage.setItem("cherryManImage", selectedManType.image);
-      localStorage.setItem("cherryManDescription", selectedManType.description);
+      localStorage.setItem("cherryManType", selectedManType);
+      localStorage.setItem("cherryManImage", selectedManImage);
+      localStorage.setItem("cherryManDescription", selectedManDescription);
+      localStorage.setItem("cherryAdjective1", adjective1);
+      localStorage.setItem("cherryAdjective2", adjective2);
+      localStorage.setItem("cherryMaxChar", maxChar);
+
+      // Update all state values
+      setQuizAnswers(answers);
+      setQuizResult(text);
+      setManType("A " + adjective1 + " but " + adjective2 + " " + selectedManType);
+      setManImage(selectedManImage);
+      setManDescription(selectedManDescription);
+
+      // Clear loading state after everything is done
+      setIsLoading(false);
     } catch (error) {
       console.error("Error generating story:", error);
+      // Track quiz error
+      posthog.capture("quiz_error", {
+        error: error instanceof Error ? error.message : "Unknown error",
+        step: "generation",
+      });
       setQuizResult("An error occurred while generating your story. Please try again.");
-    } finally {
+      // Also clear loading state on error
       setIsLoading(false);
     }
   };
 
   const handleRestart = () => {
+    // Track quiz restart
+    posthog.capture("quiz_restart");
+
     // Clear all saved data
     localStorage.removeItem("cherryQuizAnswers");
     localStorage.removeItem("cherryQuizResult");
     localStorage.removeItem("cherryManType");
     localStorage.removeItem("cherryManImage");
     localStorage.removeItem("cherryManDescription");
+    localStorage.removeItem("cherryAdjective1");
+    localStorage.removeItem("cherryAdjective2");
+    localStorage.removeItem("cherryMaxChar");
 
     // Reset all state
     setQuizAnswers({});
@@ -224,28 +368,45 @@ export const MyTypeOfMan = () => {
     <div className="min-h-screen w-screen bg-[url('/BG.png')] bg-cover bg-center bg-no-repeat bg-fixed">
       <div className="w-full py-8 px-4 min-h-screen flex items-center justify-center">
         <div className="max-w-3xl w-full bg-black/30 backdrop-blur-md p-6 md:p-10 rounded-2xl">
-          <h1 className="text-3xl md:text-4xl text-pink-200 font-[Pinyon_Script] text-center mb-2">
-            Discover Your Type
-          </h1>
-          <p className="text-white font-[Comme] text-center mb-8">Find out what kind of man is your perfect match</p>
-
           {!showResult ? (
-            <Quiz
-              questions={questions}
-              onFinished={generateResults}
-              initialStep={currentStep}
-              initialAnswers={quizAnswers}
-            />
+            <>
+              <h1 className="text-3xl md:text-4xl text-pink-200 font-[Pinyon_Script] text-center mb-2">
+                Discover Your Type
+              </h1>
+              <p className="text-white font-[Comme] text-center mb-8">
+                Find out what kind of man is your perfect match
+              </p>
+
+              <Quiz
+                questions={questions}
+                onFinished={generateResults}
+                initialStep={currentStep}
+                initialAnswers={quizAnswers}
+              />
+            </>
           ) : isLoading ? (
-            <LoadingResults />
+            <>
+              <h1 className="text-3xl md:text-4xl text-pink-200 font-[Pinyon_Script] text-center mb-2">
+                Discover Your Type
+              </h1>
+              <p className="text-white font-[Comme] text-center mb-8">
+                Find out what kind of man is your perfect match
+              </p>
+              <LoadingResults />
+            </>
           ) : (
-            <QuizResult
-              result={quizResult}
-              resultTitle={manType}
-              resultImage={manImage}
-              resultDescription={manDescription}
-              onRestart={handleRestart}
-            />
+            <>
+              <h1 className="text-3xl md:text-4xl text-pink-200 font-[Pinyon_Script] text-center mb-4">
+                Your perfect Match is:
+              </h1>
+              <QuizResult
+                result={quizResult}
+                resultTitle={manType}
+                resultImage={manImage}
+                resultDescription={manDescription}
+                onRestart={handleRestart}
+              />
+            </>
           )}
         </div>
       </div>

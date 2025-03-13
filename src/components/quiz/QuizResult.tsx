@@ -28,16 +28,14 @@ export const QuizResult = ({
 
   return (
     <div className="w-full animate-fadeIn">
-      <h2 className="text-2xl md:text-3xl text-white font-[Kaisei_Decol] mb-6 text-center">{resultTitle}</h2>
-
       <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg mb-6">
+        <h2 className="text-2xl md:text-3xl text-white font-[Kaisei_Decol] mb-6 text-center">{resultTitle}</h2>
         {resultImage && resultDescription && (
           <div className="flex flex-col md:flex-row gap-6 mb-8">
             <div className="md:w-1/3">
               <img src={resultImage} alt={resultTitle} className="w-full aspect-square object-cover rounded-lg" />
             </div>
             <div className="md:w-2/3">
-              <h3 className="text-md text-pink-200 font-[Kaisei_Decol] mb-3">{resultTitle} is:</h3>
               <p className="text-white font-[Comme]">{resultDescription}</p>
             </div>
           </div>

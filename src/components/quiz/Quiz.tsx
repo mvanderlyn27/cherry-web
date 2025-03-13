@@ -3,6 +3,9 @@ import { Question, QuizAnswers, QuizProps } from "./types";
 import FormWizard from "./FormWizard";
 import MultipleChoice from "./MultipleChoice";
 import ImageChoice from "./ImageChoice";
+import TextInput from "./TextInput";
+// Add import for MultiSelect
+import MultiSelect from "./MultiSelect";
 
 /**
  * Quiz component provides a reusable template for creating quizzes
@@ -14,17 +17,21 @@ export const Quiz = ({ questions, onFinished, initialStep = 1, initialAnswers = 
 
   const totalSteps = questions.length;
 
-  const handleOptionSelect = (value: string) => {
+  const handleOptionSelect = (value: string, next: boolean = true) => {
     const currentQuestion = questions[currentStep - 1];
     setQuizAnswers({
       ...quizAnswers,
       [currentQuestion.id]: value,
     });
-
-    if (currentStep < totalSteps) {
-      setCurrentStep(currentStep + 1);
-    } else {
-      onFinished(quizAnswers);
+    if (next) {
+      if (currentStep < totalSteps) {
+        setCurrentStep(currentStep + 1);
+      } else {
+        onFinished({
+          ...quizAnswers,
+          [currentQuestion.id]: value,
+        });
+      }
     }
   };
 
@@ -52,23 +59,49 @@ export const Quiz = ({ questions, onFinished, initialStep = 1, initialAnswers = 
 
       {questions.map((question, index) => {
         if (index + 1 === currentStep) {
-          return question.type === "multipleChoice" ? (
-            <MultipleChoice
-              key={question.id}
-              question={question.question}
-              options={question.options}
-              onSelect={handleOptionSelect}
-              selectedValue={quizAnswers[question.id]}
-            />
-          ) : (
-            <ImageChoice
-              key={question.id}
-              question={question.question}
-              options={question.options}
-              onSelect={handleOptionSelect}
-              selectedValue={quizAnswers[question.id]}
-            />
-          );
+          if (question.type === "multipleChoice") {
+            return (
+              <MultipleChoice
+                key={question.id}
+                question={question.question}
+                options={question.options || []}
+                onSelect={handleOptionSelect}
+                selectedValue={quizAnswers[question.id]}
+              />
+            );
+          } else if (question.type === "imageChoice") {
+            return (
+              <ImageChoice
+                key={question.id}
+                question={question.question}
+                options={question.options || []}
+                onSelect={handleOptionSelect}
+                selectedValue={quizAnswers[question.id]}
+                allowMultiple={question.allowMultiple}
+              />
+            );
+          } else if (question.type === "textInput") {
+            return (
+              <TextInput
+                key={question.id}
+                question={question.question}
+                placeholder={question.placeholder}
+                initialValue={quizAnswers[question.id] || ""}
+                onSubmit={handleOptionSelect}
+              />
+            );
+          } else if (question.type === "multiSelect") {
+            return (
+              <MultiSelect
+                key={question.id}
+                question={question.question}
+                options={question.options || []}
+                onSelect={handleOptionSelect}
+                selectedValue={quizAnswers[question.id] || ""}
+                maxSelections={question.maxSelections}
+              />
+            );
+          }
         }
         return null;
       })}

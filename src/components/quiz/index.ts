@@ -7,4 +7,6 @@ export { default as QuizResult } from "./QuizResult";
 export { default as Quiz } from "./Quiz";
 export { default as ShareableImage } from "./ShareableImage";
 export { default as ShareLink } from "./ShareLink";
+export { TextInput } from "./TextInput";
+export { MultiSelect } from "./MultiSelect";
 export * from "./types";

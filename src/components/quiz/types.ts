@@ -6,11 +6,17 @@ export interface Option {
   image?: string;
 }
 
+// Add 'textInput' to the question types
+export type QuestionType = "multipleChoice" | "imageChoice" | "textInput" | "multiSelect";
+
 export interface Question {
   id: string;
-  type: "multipleChoice" | "imageChoice";
+  type: QuestionType;
   question: string;
-  options: Option[];
+  options?: Option[];
+  placeholder?: string;
+  maxSelections?: number; // For multiSelect questions
+  allowMultiple?: boolean; // For imageChoice questions that allow multiple selections
 }
 
 export interface QuizAnswers {
