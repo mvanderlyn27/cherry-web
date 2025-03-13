@@ -2,15 +2,13 @@ import { useState, FormEvent } from "react";
 import { LuPencil } from "react-icons/lu";
 import { FaPepperHot } from "react-icons/fa";
 import { FaPeopleGroup } from "react-icons/fa6";
+import { toast } from "sonner";
 
 export function Home() {
   const [email, setEmail] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<boolean>(false);
-  const [showToast, setShowToast] = useState<boolean>(false);
-  const [toastMessage, setToastMessage] = useState<string>("");
-  const [toastType, setToastType] = useState<"success" | "error" | null>(null);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,16 +34,10 @@ export function Home() {
 
       setSuccess(true);
       setEmail("");
-      setToastMessage("Successfully joined the waitlist!");
-      setToastType("success");
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 3000);
+
+      toast("Successfully joined the waitlist!");
     } catch (err) {
       setError("Failed to join waitlist. Please try again.");
-      setToastMessage("Failed to join waitlist. Please try again.");
-      setToastType("error");
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 3000);
     } finally {
       setIsLoading(false);
     }
@@ -53,15 +45,6 @@ export function Home() {
 
   return (
     <div className="min-h-screen w-screen bg-[url('/BG.png')] bg-cover bg-center bg-no-repeat bg-fixed">
-      {/* Toast Notification */}
-      {showToast && (
-        <div
-          className={`fixed top-4 right-4 p-4 rounded-lg shadow-lg transition-all duration-300 transform translate-y-0 ${
-            toastType === "success" ? "bg-green-500" : "bg-red-500"
-          } text-white z-50 animate-fade-in-down`}>
-          {toastMessage}
-        </div>
-      )}
       {/* Hero Section */}
       <div className="w-full py-8 md:px-0  min-h-screen flex items-center justify-center relative">
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16 xl:gap-24 max-w-6xl w-full">
