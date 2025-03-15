@@ -115,21 +115,34 @@ export const ShareableImage = ({
   };
 
   const handleGenerate = async () => {
+    if (!imageSrc) {
+      toast.error("No image available to share");
+      return;
+    }
+
     setIsGenerating(true);
     try {
-      console.log(
-        "Starting image generation with:",
-        {
-          imageSrc,
-          title,
-          mainTitle,
-          description,
-        },
-        "ismobile: ",
-        isMobileDevice
+      // Preload all images before generation
+      const imagesToPreload = [
+        imageSrc,
+        `${window.location.origin}/quiz/results/bg.png`,
+        `${window.location.origin}/quiz/results/divider_top.png`,
+        `${window.location.origin}/quiz/results/divider_mid.png`
+      ];
+
+      await Promise.all(
+        imagesToPreload.map(
+          (src) =>
+            new Promise((resolve, reject) => {
+              const img = new Image();
+              img.crossOrigin = "anonymous";
+              img.onload = resolve;
+              img.onerror = resolve; // Continue even if error
+              img.src = src;
+            })
+        )
       );
 
-      // Use the detached DOM renderer for high-quality image generation
       const dataUrl = await renderComponentToImage(
         ShareImageTemplate,
         {
@@ -139,12 +152,13 @@ export const ShareableImage = ({
           description,
           websiteUrl,
           userName,
+          imageMode: true, // Force image mode
         },
         {
           width: 1080,
           height: 1920,
-          scale: 2, // Higher scale for better quality
-          backgroundColor: null, // Let the background from the component show through
+          scale: 2,
+          backgroundColor: null,
         }
       );
 

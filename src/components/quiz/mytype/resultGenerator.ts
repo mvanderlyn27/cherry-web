@@ -60,20 +60,23 @@ export const generateQuizResults = async (answers: QuizAnswers) => {
   const prompt = `
     Create a structured response with one field:
     - man_description:
-      - Write a short summary of a romantic dynamic between ${answers.name} and A ${
+      - Write a short summary of a romantic dynamic between the user: ${answers.name} and the love interest: A ${
     answers.food + " but " + answers.drink + " " + selectedManType
   } 
-      - Integrate some of the following elements, as long as they make sense to the story (prioritizing conflict/drama): [${trope}, ${extraDetails}, can include locations, relationships, tropes, secrets, etc.] Add new elements to amplify drama and connection if needed. Ensure the ${
+      - The trope of the dynamic should be ${trope}, integrate it in the summary with show don't tell.
+      - Integrate some of the following elements, as long as they make sense to the story (prioritizing romance/drama): [ ${extraDetails}, can include locations, relationships, tropes, secrets, etc.] Add new elements to amplify drama and connection if needed. Ensure the ${
     answers.food
   }, and ${
     answers.drink
   } aspects of the ${selectedManType} is evident even if in conflict with the adjective, also don't explicitely repeat the adjective, use show don't tell.
-      - The description should be 40-50 words maximum.
-      - Focus on a central *conflict* and a strong initial *attraction/temptation*, even if dangerous. Show *vulnerability* on at least one side (or both).
+      - The description should be 40 words maximum.
+      - Focus on an the *attraction/temptation*, even if dangerous. Show *vulnerability* on at least one side (or both).
       - Avoid repeating words from this prompt.
       - Start with: "The ${selectedManType}..." and continue the story from your point of view.
       - Use third-person references for the ${selectedManType} ("he", "him"), avoid coming up with a name for him.
+      - Ensure the dynamic is explored well, and isn't jumping around too much, prioritize seeing a thought through over covering too much content
       - The summary should imply a continuing story, not a resolved one.
+      - Example: "Forced to watch his hockey games as his fake girlfriend, he loves teasing you in front of other people. You think this is all pretend, but he starts to act possessive when other people touch you, and you start falling for his "fake" tender actions."
 
     Format your response as a JSON object with this field.  `;
   console.log("prompt", prompt);

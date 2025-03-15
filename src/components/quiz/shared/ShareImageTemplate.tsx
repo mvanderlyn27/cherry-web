@@ -107,7 +107,7 @@ const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
                 color: "#36242D",
                 fontFamily: "'Kaisei Decol', serif",
               }}>
-              Wanna read the full story about you and him?
+              Want the full story?
             </p>
           )}
           {!imageMode && (

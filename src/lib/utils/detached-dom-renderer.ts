@@ -23,146 +23,117 @@ export const renderComponentToImage = async <P extends object>(
 ): Promise<string> => {
   // Create a detached container element
   const container = document.createElement("div");
+  let root: ReactDOM.Root | null = null;
 
-  // Set necessary styles for rendering but keep it out of the visible document
+  // Add these styles to ensure proper rendering in Chrome
   Object.assign(container.style, {
-    position: "absolute",
-    left: "-9999px",
-    top: "-9999px",
+    position: "fixed", // Changed from absolute
+    left: "-9999",
+    top: "-9999",
     width: options.width ? `${options.width}px` : "1080px",
     height: options.height ? `${options.height}px` : "1920px",
     overflow: "hidden",
-    opacity: "1", // Changed from 0 to ensure visibility during capture
+    opacity: "1",
     pointerEvents: "none",
-    zIndex: "-1000",
-    backgroundColor: options.backgroundColor || "#ffffff", // Ensure white background if not specified
+    zIndex: "999999", // Changed to ensure visibility
+    backgroundColor: "#ffffff", // Set white background
     margin: "0",
     padding: "0",
     border: "none",
     transform: "none",
-    display: "block", // Ensure the container is displayed
-    visibility: "visible", // Explicitly set visibility
+    display: "block",
+    visibility: "visible",
   });
 
   // Add to document body temporarily
   document.body.appendChild(container);
 
   try {
-    // Create root and render the component using modern React API
-    const root = ReactDOM.createRoot(container);
+    root = ReactDOM.createRoot(container);
 
-    // If the component is ShareImageTemplate, ensure it uses fixed mode
     let componentProps = { ...props };
     if (Component.name === "ShareImageTemplate" || Component.displayName === "ShareImageTemplate") {
       componentProps = {
         ...componentProps,
         imageMode: true,
-      };
+      } as P;
     }
 
     const element = React.createElement(Component, componentProps);
+
+    // Render and wait for completion
     await new Promise<void>((resolve) => {
-      root.render(element);
-      // Use requestAnimationFrame to ensure the component is rendered
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => resolve());
-      });
+      root?.render(element);
+      setTimeout(resolve, 500); // Increased wait time for rendering
     });
 
-    // Force a repaint and wait for images to load
-    container.getBoundingClientRect();
-
-    // Find all images in the container and ensure they're loaded
-    const images = Array.from(container.getElementsByTagName("img"));
+    // Wait for images to load
+    const images = Array.from(container.querySelectorAll('img, [style*="background-image"]'));
     await Promise.all(
       images.map(
-        (img) =>
-          new Promise<void>((resolve, reject) => {
-            if (img.complete) {
-              resolve();
+        (element) =>
+          new Promise<void>((resolve) => {
+            if (element instanceof HTMLImageElement) {
+              if (!element.src || element.complete) {
+                resolve();
+                return;
+              }
+              element.crossOrigin = "anonymous";
+              element.onload = () => resolve();
+              element.onerror = () => resolve();
             } else {
-              img.crossOrigin = "anonymous"; // Ensure CORS is set before loading
-              img.onload = () => resolve();
-              img.onerror = () => {
-                console.warn(`Failed to load image: ${img.src}`);
-                resolve(); // Continue anyway
-              };
+              const style = window.getComputedStyle(element);
+              const bgImage = style.backgroundImage;
+              if (bgImage && bgImage !== "none") {
+                const url = bgImage.slice(4, -1).replace(/"/g, "");
+                if (!url) {
+                  resolve();
+                  return;
+                }
+                const img = new Image();
+                img.crossOrigin = "anonymous";
+                img.onload = () => resolve();
+                img.onerror = () => resolve();
+                img.src = url;
+              }
+              resolve();
             }
           })
       )
     );
-
-    // Wait a moment for everything to render properly
-    await new Promise((resolve) => setTimeout(resolve, 100));
-
-    console.log("Capturing detached element with dimensions:", {
-      width: container.offsetWidth,
-      height: container.offsetHeight,
-      children: container.children.length,
-      images: images.length,
-    });
 
     // Capture with html2canvas
     const canvas = await html2canvas(container, {
       scale: options.scale || 2,
       useCORS: true,
       allowTaint: true,
-      backgroundColor: options.backgroundColor || "#ffffff",
+      backgroundColor: "#ffffff",
       logging: true,
       width: options.width || 1080,
       height: options.height || 1920,
+      foreignObjectRendering: false, // Changed to false for better compatibility
+      removeContainer: false,
       onclone: (clonedDoc, clonedElement) => {
-        console.log("Element cloned for capture", {
-          width: clonedElement.offsetWidth,
-          height: clonedElement.offsetHeight,
-          children: clonedElement.children.length,
-        });
-
-        // Pre-process all images in the clone
-        const images = clonedElement.querySelectorAll("img");
-        images.forEach((img) => {
-          // Set crossOrigin before the image starts loading
-          img.crossOrigin = "anonymous";
-          img.style.opacity = "1";
-          img.style.visibility = "visible";
-          img.style.display = "block";
-
-          // Force reload the image with CORS if not already loaded
-          if (!img.complete) {
-            const originalSrc = img.src;
-            img.src = "";
-            img.src = originalSrc;
+        clonedElement.style.visibility = "visible";
+        clonedElement.style.opacity = "1";
+        const images = clonedElement.querySelectorAll("img, [style*='background-image']");
+        images.forEach((img: Element) => {
+          if (img instanceof HTMLImageElement) {
+            img.crossOrigin = "anonymous";
+            img.style.opacity = "1";
+            img.style.visibility = "visible";
           }
-        });
-
-        // Apply additional styles to ensure proper rendering
-        Object.assign(clonedElement.style, {
-          transform: "none",
-          perspective: "none",
-          backfaceVisibility: "visible",
-          WebkitFontSmoothing: "antialiased",
-          opacity: "1",
-          visibility: "visible",
-          display: "block",
-          backgroundColor: options.backgroundColor || "#ffffff",
         });
       },
     });
 
     return canvas.toDataURL("image/png");
-  } catch (error) {
-    console.error("Error rendering component to image:", error);
-    throw error;
   } finally {
-    // Clean up: unmount component and remove container
-    try {
-      const root = ReactDOM.createRoot(container);
+    if (root) {
       root.unmount();
-      if (container.parentNode) {
-        container.parentNode.removeChild(container);
-      }
-    } catch (cleanupError) {
-      console.error("Error during cleanup:", cleanupError);
+    }
+    if (container.parentNode) {
+      container.parentNode.removeChild(container);
     }
   }
 };

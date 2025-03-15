@@ -13,8 +13,8 @@ interface ShareLinkProps {
  * instead of alerts when sharing is successful or fails
  */
 export const ShareLink = ({
-  title = "Cherry - Discover Your Type",
-  text = "Find out what kind of man is your perfect match!",
+  title = "Cherry - Discover Your Soulmate",
+  text = "Find out which Book Boyfriend is your Soulmate!",
   url,
   className = "flex items-center font-[Comme] text-sm cursor-pointer bg-white/10 text-white px-6 py-2 rounded-full transition-all duration-300 hover:bg-white/20",
 }: ShareLinkProps) => {
@@ -32,7 +32,7 @@ export const ShareLink = ({
         })
         .then(() => {
           // Show success toast
-          toast("Linkd Shared!");
+          toast("Link Shared!");
         })
         .catch((error) => {
           // Show error toast if user cancels or sharing fails
