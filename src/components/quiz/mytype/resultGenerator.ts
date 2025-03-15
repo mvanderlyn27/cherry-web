@@ -79,15 +79,16 @@ export const generateQuizResults = async (answers: QuizAnswers) => {
           "diamonds"
       )}
     Additional Context:
-    - Name: ${answers.name || "the protagonist"}
+    - Username: ${answers.name || "Y/N"} 
     - Age Range: ${answers.ageRange || "adult"}
     - Drink of Choice: ${answers.drink}
     - Food Preference: ${answers.food}
 
     For the man_description:
     - This should max 50 words
-    - This is a quick summary of how the user, and this book boyfriend meet/fall in love
-    - avoid including names for the man
+    - This is a made up story of how the user and this man will meet and fall in love
+    - Use the information provided above as inspiration, but don't try to list it all out, maybe include 1-2 details
+    - avoid including names for the man, refer to him as "him" or "his", "your soulmate"
 
     Format your response as a JSON object with this field.
   `;

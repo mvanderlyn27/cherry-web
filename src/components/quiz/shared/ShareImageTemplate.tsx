@@ -1,4 +1,5 @@
 import React, { forwardRef } from "react";
+import { Router, useNavigate } from "react-router-dom";
 
 interface ShareImageTemplateProps {
   imageSrc: string;
@@ -12,6 +13,7 @@ interface ShareImageTemplateProps {
 
 const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
   ({ imageSrc, title, mainTitle, description, websiteUrl, userName, scale = 1 }, ref) => {
+    const navigate = useNavigate();
     return (
       <div
         ref={ref}
@@ -109,7 +111,7 @@ const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
             Wanna read the full story about you and him?
           </p>
           <button
-            type="submit"
+            onClick={() => navigate("/")}
             style={{
               fontFamily: "'Comme', sans-serif",
               fontSize: "34px",

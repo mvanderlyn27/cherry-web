@@ -34,11 +34,11 @@ export const quizQuestions: Question[] = [
     type: "multiSelect",
     question: "What romance tropes do you secretly love?\nSelect all that apply.",
     options: [
-      { label: "Enemies to lovers", value: "aeghjlm" },
-      { label: "Friends to lovers", value: "bcgkl" },
+      { label: "Enemies to lovers", value: "acefghjlm" },
+      { label: "Friends to lovers", value: "bcdgkl" },
       { label: "Soulmates", value: "bdgjkn" },
-      { label: "Forbidden Love", value: "dfhijkmn" },
-      { label: "Fake/Arranged Relationship", value: "acefikmn" },
+      { label: "Forbidden Love", value: "dfhijmn" },
+      { label: "Fake/Arranged Relationship", value: "abcefikmn" },
     ],
   },
   {
@@ -60,9 +60,9 @@ export const quizQuestions: Question[] = [
     options: [
       { label: "Roses", value: "bdegijkn", image: "/quiz/vibe/roses.jpg" },
       { label: "Knife", value: "afhjmn", image: "/quiz/vibe/knife.jpg" },
-      { label: "Cats", value: "abceghil", image: "/quiz/vibe/cats.jpg" },
-      { label: "Diamonds", value: "eijm", image: "/quiz/vibe/diamonds.jpg" },
-      { label: "Mist", value: "acdefhjln", image: "/quiz/vibe/mist.jpg" },
+      { label: "Cats", value: "abcghikl", image: "/quiz/vibe/cats.jpg" },
+      { label: "Diamonds", value: "aeijm", image: "/quiz/vibe/diamonds.jpg" },
+      { label: "Mist", value: "cdefhjl", image: "/quiz/vibe/mist.jpg" },
     ],
   },
   {
@@ -90,7 +90,7 @@ export const quizQuestions: Question[] = [
       { label: "Coffee", value: "Obsessive", image: "/quiz/drink/coffee.png" },
       { label: "Cocktail", value: "Dramatic", image: "/quiz/drink/cocktail.png" },
       { label: "Champagne", value: "Flirty", image: "/quiz/drink/champagne.png" },
-      { label: "Green Tea", value: "Loayl", image: "/quiz/drink/greenTea.png" },
+      { label: "Green Tea", value: "Loyal", image: "/quiz/drink/greenTea.png" },
     ],
   },
 ];
