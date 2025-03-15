@@ -52,7 +52,7 @@ const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
           <div style={{ textAlign: "center", color: "white" }}>
             <h2
               style={{
-                fontSize: "48px",
+                fontSize: "60px",
                 fontWeight: 300,
                 color: "#36242D",
                 fontFamily: "'Kaisei Decol', serif",
@@ -61,18 +61,18 @@ const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
             </h2>
             <h1
               style={{
-                fontSize: "70px",
+                fontSize: "80px",
                 paddingBottom: "8px",
                 fontFamily: "'Kaisei Decol', serif",
-                textShadow: "0px 0px 8px rgba(0,0,0,1)",
+                textShadow: "0px 0px 12px rgba(0,0,0,1)",
               }}>
               {mainTitle}
             </h1>
           </div>
           <div
             style={{
-              width: "586px",
-              height: "586px",
+              width: "700px",
+              height: "700px",
               backgroundImage: `url(${imageSrc})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
@@ -100,14 +100,37 @@ const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
               backgroundRepeat: "no-repeat",
             }}
           />
+          {imageMode && (
+            <p
+              style={{
+                fontSize: "60px",
+                color: "#36242D",
+                fontFamily: "'Kaisei Decol', serif",
+                textAlign: "center",
+              }}>
+              Want to read a romance story about you two?
+              <br />
+              <br />
+              <a
+                href="cherryromance.vercel.app/"
+                style={{
+                  textAlign: "center",
+                  textDecoration: "underline",
+                  color: "#fff",
+                }}>
+                cherryromance.vercel.app
+              </a>
+            </p>
+          )}
           {!imageMode && (
             <p
               style={{
-                fontSize: "32px",
+                fontSize: "60px",
                 color: "#36242D",
                 fontFamily: "'Kaisei Decol', serif",
+                textAlign: "center",
               }}>
-              Want the full story?
+              Want to read your love story?
             </p>
           )}
           {!imageMode && (
@@ -152,7 +175,7 @@ const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
               }
             `}
           </style>
-          <p
+          {/* <p
             style={{
               width: "100%",
               textAlign: "center",
@@ -165,13 +188,13 @@ const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
             Find your Book Soulmate at:
             <br />
             <a
-              href="https://cherryromance.vercel.app/quiz/book-bf"
+              href="https://cherryromance.vercel.app/book-bf"
               style={{
                 textDecoration: "underline",
               }}>
-              cherryromance.vercel.app/quiz/book-bf
+              cherryromance.vercel.app/book-bf
             </a>
-          </p>
+          </p> */}
         </div>
       </div>
     );

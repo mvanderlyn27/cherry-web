@@ -37,7 +37,7 @@ export const ShareableImage = ({
   imageSrc,
   mainTitle,
   description,
-  websiteUrl = "http://cherryromance.vercel.app/quiz/book-bf",
+  websiteUrl = "http://cherryromance.vercel.app/book-bf",
   fileName = "my-result.png",
   userName,
 }: ShareableImageProps) => {
@@ -127,7 +127,7 @@ export const ShareableImage = ({
         imageSrc,
         `${window.location.origin}/quiz/results/bg.png`,
         `${window.location.origin}/quiz/results/divider_top.png`,
-        `${window.location.origin}/quiz/results/divider_mid.png`
+        `${window.location.origin}/quiz/results/divider_mid.png`,
       ];
 
       await Promise.all(

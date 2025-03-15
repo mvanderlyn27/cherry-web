@@ -31,63 +31,47 @@ export const generateQuizResults = async (answers: QuizAnswers) => {
 
   // Get result details
   const selectedManType = archetypes[maxCharValue as keyof typeof archetypes];
-  const extraDetails = extraInfo[maxCharValue as keyof typeof archetypes];
-  const trope = quizQuestions
-    .find((val) => val.id === "trope")
-    ?.options?.find((val) => val.value === answers.trope)?.label;
+  // const extraDetails = extraInfo[maxCharValue as keyof typeof archetypes];
+  // const trope = quizQuestions
+  // .find((val) => val.id === "trope")
+  // ?.options?.find((val) => val.value === answers.trope)?.label;
   const selectedManImage = `/quiz/results/${maxCharValue.toUpperCase()}.jpg`;
 
-  // Generate description using Gemini API
-  const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY as string);
-  const model = genAI.getGenerativeModel({
-    model: "gemini-2.0-flash-lite",
-    generationConfig: {
-      responseMimeType: "application/json",
-      responseSchema: {
-        type: SchemaType.OBJECT,
-        description: "",
-        properties: {
-          man_description: {
-            type: SchemaType.STRING,
-            description: "50 words max, characteristics for this type of man, based on all context you have",
-          },
-        },
-        required: ["man_description"],
-      },
-    },
-  });
+  // // Generate description using Gemini API
+  // const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY as string);
+  // const model = genAI.getGenerativeModel({
+  //   model: "gemini-2.0-flash-lite",
+  //   generationConfig: {
+  //     responseMimeType: "application/json",
+  //     responseSchema: {
+  //       type: SchemaType.OBJECT,
+  //       description: "",
+  //       properties: {
+  //         date_description: {
+  //           type: SchemaType.STRING,
+  //           description: "40 words max, dream date description",
+  //         },
+  //       },
+  //       required: ["date_description"],
+  //     },
+  //   },
+  // });
 
-  const prompt = `
-    Create a structured response with one field:
-    - man_description:
-      - Write a short summary of a romantic dynamic between the user: ${answers.name} and the love interest: A ${
-    answers.food + " but " + answers.drink + " " + selectedManType
-  } 
-      - The trope of the dynamic should be ${trope}, integrate it in the summary with show don't tell.
-      - Integrate some of the following elements, as long as they make sense to the story (prioritizing romance/drama): [ ${extraDetails}, can include locations, relationships, tropes, secrets, etc.] Add new elements to amplify drama and connection if needed. Ensure the ${
-    answers.food
-  }, and ${
-    answers.drink
-  } aspects of the ${selectedManType} is evident even if in conflict with the adjective, also don't explicitely repeat the adjective, use show don't tell.
-      - The description should be 40 words maximum.
-      - Focus on an the *attraction/temptation*, even if dangerous. Show *vulnerability* on at least one side (or both).
-      - Avoid repeating words from this prompt.
-      - Start with: "The ${selectedManType}..." and continue the story from your point of view.
-      - Use third-person references for the ${selectedManType} ("he", "him"), avoid coming up with a name for him.
-      - Ensure the dynamic is explored well, and isn't jumping around too much, prioritize seeing a thought through over covering too much content
-      - The summary should imply a continuing story, not a resolved one.
-      - Example: "Forced to watch his hockey games as his fake girlfriend, he loves teasing you in front of other people. You think this is all pretend, but he starts to act possessive when other people touch you, and you start falling for his "fake" tender actions."
-
-    Format your response as a JSON object with this field.  `;
-  console.log("prompt", prompt);
-  const result = await model.generateContent(prompt);
-  const responseText = result.response.text();
-  const parsedResponse = JSON.parse(responseText);
+  // const prompt = `
+  //   Create a structured response with one field:
+  //   - date_description:
+  //     - 20 words max, description of a dream date between the user: ${answers.name} and their soulmate: "A${answers.food} but, ${answers.drink} ${selectedManType}".
+  //     - come up with a dream date that women 20-40 would love, ensure it makes sense based on the type of soulmate .
+  //   Format your response as a JSON object with this field.`;
+  // console.log("prompt", prompt);
+  // const result = await model.generateContent(prompt);
+  // const responseText = result.response.text();
+  // const parsedResponse = JSON.parse(responseText);
 
   return {
     manType: selectedManType,
     manImage: selectedManImage,
-    manDescription: parsedResponse.man_description,
+    // dateDescription: parsedResponse.date_description,
     maxChar: maxCharValue,
   };
 };

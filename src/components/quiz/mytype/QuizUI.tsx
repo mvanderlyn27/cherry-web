@@ -39,7 +39,7 @@ export const QuizUI = ({ generateResults }: { generateResults: (answer: QuizAnsw
             />
           </div>
         ) : isLoading ? (
-          <div className="w-full min-h-screen flex items-center justify-center">
+          <div className="w-full min-h-screen flex flex-col items-center justify-center">
             <h1 className="text-3xl md:text-4xl text-pink-200 font-[Pinyon_Script] text-center mb-2">
               Loading {userName ? userName + "s " : "Your"} Soulmate
             </h1>

@@ -34,7 +34,7 @@ export const MyTypeOfMan = () => {
         answers,
         manType: results.manType,
         manImage: results.manImage,
-        manDescription: results.manDescription,
+        manDescription: "",
         adjective1: answers.food,
         adjective2: answers.drink,
         maxChar: results.maxChar,
