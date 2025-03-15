@@ -1,5 +1,5 @@
 import React from "react";
-import { MultipleChoiceProps } from "./types";
+import { MultipleChoiceProps } from "../types";
 
 /**
  * MultipleChoice component displays a question with multiple choice options

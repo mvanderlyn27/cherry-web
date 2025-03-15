@@ -43,7 +43,6 @@ export interface ImageChoiceProps {
 }
 
 export interface QuizResultProps {
-  result: string;
   resultTitle?: string;
   resultImage?: string;
   resultDescription?: string;
@@ -52,11 +51,12 @@ export interface QuizResultProps {
   onRestart?: () => void;
   onShareLink?: () => void;
   onShareResults?: () => void;
+  userName: string;
 }
 
 export interface QuizProps {
   questions: Question[];
-  onFinished: (answers: QuizAnswers) => void;
+  onFinished: (answer: QuizAnswers) => void;
   initialStep?: number;
   initialAnswers?: QuizAnswers;
 }

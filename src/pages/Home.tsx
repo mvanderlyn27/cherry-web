@@ -62,7 +62,7 @@ export function Home() {
   const demoImages = ["/home/Screenshot1.png", "/home/Screenshot2.png", "/home/Screenshot3.png"];
 
   return (
-    <div className="min-h-screen w-screen overflow-x-hidden bg-[url('/BG.png')] bg-cover bg-center bg-no-repeat bg-fixed">
+    <div className="min-h-screen w-full overflow-x-hidden bg-[url('/BG.png')] bg-cover bg-center bg-no-repeat bg-fixed">
       {/* Hero Section */}
       <div className="w-full py-8 px-4 md:px-0 min-h-screen flex items-center justify-center relative">
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-8 xl:gap-8 max-w-6xl w-full">

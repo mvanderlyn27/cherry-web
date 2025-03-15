@@ -1,36 +1,28 @@
-import React, { useState } from "react";
-import { Question, QuizAnswers, QuizProps } from "./types";
+import React from "react";
+import { Question, QuizAnswers, QuizProps } from "../types";
 import FormWizard from "./FormWizard";
 import MultipleChoice from "./MultipleChoice";
 import ImageChoice from "./ImageChoice";
-import TextInput from "./TextInput";
-// Add import for MultiSelect
+import { TextInput } from "./index";
 import MultiSelect from "./MultiSelect";
+import { useQuizStore } from "../../../lib/store/quizStore";
 
-/**
- * Quiz component provides a reusable template for creating quizzes
- * It handles quiz state, navigation, and rendering the appropriate question components
- */
 export const Quiz = ({ questions, onFinished, initialStep = 1, initialAnswers = {} }: QuizProps) => {
-  const [currentStep, setCurrentStep] = useState<number>(initialStep);
-  const [quizAnswers, setQuizAnswers] = useState<QuizAnswers>(initialAnswers);
+  const { currentStep, setCurrentStep, quizAnswers, setQuizAnswers } = useQuizStore();
 
   const totalSteps = questions.length;
 
   const handleOptionSelect = (value: string, next: boolean = true) => {
     const currentQuestion = questions[currentStep - 1];
-    setQuizAnswers({
-      ...quizAnswers,
-      [currentQuestion.id]: value,
-    });
+    const updatedAnswers = { ...quizAnswers, [currentQuestion.id]: value };
+    setQuizAnswers(updatedAnswers);
+
     if (next) {
       if (currentStep < totalSteps) {
         setCurrentStep(currentStep + 1);
       } else {
-        onFinished({
-          ...quizAnswers,
-          [currentQuestion.id]: value,
-        });
+        // Ensure the state is updated before calling onFinished
+        onFinished(updatedAnswers);
       }
     }
   };

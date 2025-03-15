@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Option } from "./types";
+import { Option } from "../types";
 
 interface MultiSelectProps {
   question: string;

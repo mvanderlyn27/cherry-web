@@ -1,0 +1,112 @@
+import { Question } from "../types";
+
+export const quizQuestions: Question[] = [
+  {
+    id: "name",
+    type: "textInput",
+    question: "What's your name?",
+  },
+  {
+    id: "ageRange",
+    type: "multipleChoice",
+    question: "What is your age range?",
+    options: [
+      { label: "Under 20", value: "under_20" },
+      { label: "21 to 30", value: "20_30" },
+      { label: "31 to 40", value: "30_40" },
+      { label: "41 to 50", value: "40_50" },
+      { label: "51+", value: "50+" },
+    ],
+  },
+  {
+    id: "style",
+    type: "imageChoice",
+    question: "Which aesthetic attracts you the most?",
+    options: [
+      { label: "Flower", value: "abcd", image: "/quiz/aesthetic/flower.jpg" },
+      { label: "Tie", value: "efgh", image: "/quiz/aesthetic/tie.jpg" },
+      { label: "Glass", value: "ijk", image: "/quiz/aesthetic/glass.jpg" },
+      { label: "Chain", value: "lmn", image: "/quiz/aesthetic/chain.jpg" },
+    ],
+  },
+  {
+    id: "trope",
+    type: "multiSelect",
+    question: "What romance tropes do you secretly love?\nSelect all that apply.",
+    options: [
+      { label: "Enemies to lovers", value: "aeghjlm" },
+      { label: "Friends to lovers", value: "bcgkl" },
+      { label: "Soulmates", value: "bdgjkn" },
+      { label: "Forbidden Love", value: "dfhijkmn" },
+      { label: "Fake/Arranged Relationship", value: "acefikmn" },
+    ],
+  },
+  {
+    id: "animal",
+    type: "imageChoice",
+    question: "If your book boyfriend was an animal, which image fits him the most?",
+    options: [
+      { label: "Lion", value: "aejlm", image: "/quiz/animal/lion.jpg" },
+      { label: "Cat", value: "bg", image: "/quiz/animal/cat.jpg" },
+      { label: "Horse", value: "dfk", image: "/quiz/animal/horse.jpg" },
+      { label: "Eagle", value: "chin", image: "/quiz/animal/eagle.jpg" },
+    ],
+  },
+  {
+    id: "vibe",
+    type: "imageChoice",
+    allowMultiple: true,
+    question: "Which images below speak to you the most? Select all that apply.",
+    options: [
+      { label: "Roses", value: "bdegijkn", image: "/quiz/vibe/roses.jpg" },
+      { label: "Knife", value: "afhjmn", image: "/quiz/vibe/knife.jpg" },
+      { label: "Cats", value: "abceghil", image: "/quiz/vibe/cats.jpg" },
+      { label: "Diamonds", value: "eijm", image: "/quiz/vibe/diamonds.jpg" },
+      { label: "Mist", value: "acdefhjln", image: "/quiz/vibe/mist.jpg" },
+    ],
+  },
+  {
+    id: "food",
+    type: "imageChoice",
+    question: "If you were to share a kind of food with your book boyfriend, which would you choose?",
+    options: [
+      { label: "Milk Chocolate", value: "Sweet", image: "/quiz/food/milkChocolate.png" },
+      { label: "Bbq Wings", value: "Sassy", image: "/quiz/food/bbqWings.png" },
+      { label: "Pizza", value: "Crazy", image: "/quiz/food/pizza.png" },
+      { label: "Marshmallow", value: "Soft", image: "/quiz/food/marshmallow.png" },
+      { label: "Bread", value: "Silly", image: "/quiz/food/bread.png" },
+      { label: "Boiled Egg", value: "Grumpy", image: "/quiz/food/boiledEgg.png" },
+    ],
+  },
+  {
+    id: "drink",
+    type: "imageChoice",
+    question: "If you were to share a drink with your book boyfriend, which would you choose?",
+    options: [
+      { label: "Warm Water", value: "Stoic", image: "/quiz/drink/water.png" },
+      { label: "Soda", value: "Rebellious", image: "/quiz/drink/soda.png" },
+      { label: "Whiskey", value: "Broken", image: "/quiz/drink/whiskey.png" },
+      { label: "Beer", value: "Cocky", image: "/quiz/drink/beer.png" },
+      { label: "Coffee", value: "Obsessive", image: "/quiz/drink/coffee.png" },
+      { label: "Cocktail", value: "Dramatic", image: "/quiz/drink/cocktail.png" },
+      { label: "Champagne", value: "Flirty", image: "/quiz/drink/champagne.png" },
+      { label: "Green Tea", value: "Loayl", image: "/quiz/drink/greenTea.png" },
+    ],
+  },
+];
+export const archetypes = {
+  a: "Bully",
+  b: "Childhood Sweetheart",
+  c: "Brother's Popular Friend",
+  d: "Artist",
+  e: "Billionaire",
+  f: "Commander",
+  g: "Intellectual",
+  h: "Assassin",
+  i: "Star",
+  j: "Vampire Prince",
+  k: "Knight",
+  l: "Biker",
+  m: "Mafia Boss",
+  n: "Alpha Wolf",
+};

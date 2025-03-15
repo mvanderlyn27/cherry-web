@@ -4,12 +4,14 @@ interface GenerateShareImageParams {
   mainTitle: string;
   description: string;
   websiteUrl: string;
+  userName?: string; // Add userName parameter
 }
 
 export const generateShareImage = async ({
   imageSrc,
   title,
   mainTitle,
+  userName,
   description,
   websiteUrl,
 }: GenerateShareImageParams): Promise<string> => {
@@ -22,12 +24,14 @@ export const generateShareImage = async ({
 
   // Draw background and basic elements
   drawBackground(ctx, canvas);
-  drawHeader(ctx, canvas, title);
+  
+  // Draw personalized header with user's name
+  drawHeader(ctx, canvas, userName ? `${userName}'s Type of Man` : title);
 
   // Load and draw main image
   await drawMainImage(ctx, canvas, imageSrc);
 
-  // Draw text elements
+  // Draw main title (character type) below the image
   drawMainTitle(ctx, canvas, mainTitle);
   const descriptionEndY = drawDescription(ctx, canvas, description);
   drawWebsite(ctx, canvas, websiteUrl, descriptionEndY);
@@ -90,9 +94,9 @@ const drawMainImage = async (ctx: CanvasRenderingContext2D, canvas: HTMLCanvasEl
     const img = new Image();
     img.crossOrigin = "anonymous";
     img.onload = () => {
-      const imgSize = 600;
+      const imgSize = 550; // Reduced from 600 to make more room
       const centerX = canvas.width / 2;
-      const centerY = 625; // Increased from 550 to move image down
+      const centerY = 550; // Reduced from 625 to move image up
       const radius = imgSize / 2;
 
       // Calculate scaling to cover the circle while maintaining aspect ratio
@@ -136,12 +140,42 @@ const drawMainImage = async (ctx: CanvasRenderingContext2D, canvas: HTMLCanvasEl
 
 // Draw main title with enhanced glow effect
 const drawMainTitle = (ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, mainTitle: string) => {
+  // Handle long titles by adjusting font size
+  let fontSize = 100;
+  ctx.font = `bold ${fontSize}px 'Arial'`;
+  let textWidth = ctx.measureText(mainTitle).width;
+  
+  // If text is too wide, reduce font size
+  if (textWidth > canvas.width * 0.9) {
+    fontSize = Math.floor(fontSize * (canvas.width * 0.9) / textWidth);
+    ctx.font = `bold ${fontSize}px 'Arial'`;
+  }
+  
   ctx.shadowColor = "rgba(184, 124, 237, 0.8)";
   ctx.shadowBlur = 30;
   ctx.fillStyle = "#B87CED"; // Purple
-  ctx.font = "bold 100px 'Arial'";
   ctx.textAlign = "center";
-  ctx.fillText(mainTitle, canvas.width / 2, 1050); // Increased from 1000
+  
+  // For longer titles, split into multiple lines if needed
+  const words = mainTitle.split(' ');
+  let line = '';
+  let y = 950; // Start position, reduced from 1050
+  const lineHeight = fontSize * 1.2;
+  
+  for (let i = 0; i < words.length; i++) {
+    const testLine = line + words[i] + ' ';
+    const metrics = ctx.measureText(testLine);
+    const testWidth = metrics.width;
+    
+    if (testWidth > canvas.width * 0.9 && i > 0) {
+      ctx.fillText(line, canvas.width / 2, y);
+      line = words[i] + ' ';
+      y += lineHeight;
+    } else {
+      line = testLine;
+    }
+  }
+  ctx.fillText(line, canvas.width / 2, y);
 
   // Add decorative line with enhanced gradient
   const lineGradient = ctx.createLinearGradient(canvas.width * 0.2, 0, canvas.width * 0.8, 0);
@@ -149,7 +183,9 @@ const drawMainTitle = (ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement,
   lineGradient.addColorStop(0.5, "rgba(184, 124, 237, 0.6)");
   lineGradient.addColorStop(1, "rgba(184, 124, 237, 0)");
   ctx.fillStyle = lineGradient;
-  ctx.fillRect(canvas.width * 0.2, 1110, canvas.width * 0.6, 3); // Increased from 1050
+  ctx.fillRect(canvas.width * 0.2, y + 60, canvas.width * 0.6, 3);
+  
+  return y + 60; // Return the end position of the title
 };
 
 // Draw description with text wrapping
@@ -160,7 +196,7 @@ const drawDescription = (ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElemen
     let y = startY;
 
     ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
-    ctx.font = "500 42px Arial";
+    ctx.font = "500 38px Arial"; // Slightly smaller font
     ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
     ctx.shadowBlur = 3;
     ctx.textAlign = "left"; // Change text alignment for description
@@ -184,7 +220,7 @@ const drawDescription = (ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElemen
     return y;
   };
 
-  return wrapText(description, 800, 1200, 65); // Increased Y from 1150 and line height from 60
+  return wrapText(description, 800, 1100, 60); // Start description higher
 };
 
 // Draw website URL and call-to-action
@@ -194,18 +230,22 @@ const drawWebsite = (
   websiteUrl: string,
   descriptionEndY: number
 ) => {
+  // Ensure there's enough space for the website info
+  const minEndY = canvas.height - 300; // Minimum space needed from bottom
+  const adjustedEndY = Math.min(descriptionEndY, minEndY);
+  
   // Add "Find yours at:" text with enhanced styling
   ctx.shadowColor = "rgba(249, 168, 212, 0.4)";
   ctx.shadowBlur = 8;
   ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
   ctx.font = "italic 36px 'Arial'";
-  ctx.fillText("Find yours at:", canvas.width / 2, descriptionEndY + 150); // Increased from 120
+  ctx.fillText("Find yours at:", canvas.width / 2, adjustedEndY + 120);
 
   // Add website URL with enhanced glowing effect
   ctx.shadowColor = "rgba(249, 168, 212, 0.6)";
   ctx.shadowBlur = 15;
   ctx.fillStyle = "#F9A8D4";
   ctx.font = "bold 44px 'Arial'";
-  ctx.fillText(websiteUrl, canvas.width / 2, descriptionEndY + 220); // Increased from 180
+  ctx.fillText(websiteUrl, canvas.width / 2, adjustedEndY + 180);
   ctx.shadowBlur = 0;
 };

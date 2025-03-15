@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Option } from "./types";
+import { Option } from "../types";
 
 /**
  * ImageChoice component displays a question with image-based options
@@ -68,16 +68,16 @@ export const ImageChoice = ({
             <img
               src={option.image}
               alt={option.label}
-              className="w-full aspect-square object-cover rounded-lg transition-all duration-300 group-hover:opacity-90 group-hover:scale-105"
+              className="w-full aspect-square object-cover rounded-lg transition-all duration-300  group-hover:scale-105"
             />
-            <div
+            {/* <div
               className={`absolute inset-0 flex flex-col items-center justify-center gap-2 ${
                 (allowMultiple ? selectedOptions.includes(option.value) : selectedValue === option.value)
                   ? "bg-black/60"
                   : "bg-black/40 opacity-0 hover:opacity-100"
               } transition-opacity duration-300 rounded-lg`}>
               <span className="text-white font-[Comme]">{option.label}</span>
-            </div>
+            </div> */}
           </div>
         ))}
       </div>

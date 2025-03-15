@@ -1,5 +1,5 @@
 import React from "react";
-import { FormWizardProps } from "./types";
+import { FormWizardProps } from "../types";
 
 /**
  * FormWizard component displays the current progress in a multi-step form
