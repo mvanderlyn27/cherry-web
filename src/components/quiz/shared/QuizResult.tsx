@@ -36,6 +36,32 @@ export const QuizResult = ({
 
   return (
     <div className="w-full md:p-4  flex flex-col gap-4 justify-start soverflow-hidden animate-fadeIn">
+      {/* Container with explicit dimensions matching the scaled content */}
+      <div
+        className="relative  mx-auto rounded-lg overflow-hidden"
+        style={{
+          width: `${scaledWidth}px`,
+          height: `${scaledHeight}px`,
+        }}>
+        {/* The template with transform scale */}
+        <div
+          style={{
+            transform: `scale(${scale})`,
+            transformOrigin: "top left",
+            width: "1080px",
+            height: "1920px",
+          }}>
+          <ShareImageTemplate
+            ref={templateRef}
+            title={`${userName ? userName + "'s" : "Your"} Book Soulmate is...`}
+            imageSrc={resultImage || ""}
+            mainTitle={resultTitle}
+            description={resultDescription || ""}
+            websiteUrl="cherryromance.vercel.app/book-bf"
+            userName={userName}
+          />
+        </div>
+      </div>
       {/* Action buttons */}
       <div className="flex flex-wrap justify-center gap-4">
         {onRestart && (
@@ -69,32 +95,6 @@ export const QuizResult = ({
             userName={userName}
           />
         )}
-      </div>
-      {/* Container with explicit dimensions matching the scaled content */}
-      <div
-        className="relative  mx-auto rounded-lg overflow-hidden"
-        style={{
-          width: `${scaledWidth}px`,
-          height: `${scaledHeight}px`,
-        }}>
-        {/* The template with transform scale */}
-        <div
-          style={{
-            transform: `scale(${scale})`,
-            transformOrigin: "top left",
-            width: "1080px",
-            height: "1920px",
-          }}>
-          <ShareImageTemplate
-            ref={templateRef}
-            title={`${userName ? userName + "'s" : "Your"} Book Soulmate is...`}
-            imageSrc={resultImage || ""}
-            mainTitle={resultTitle}
-            description={resultDescription || ""}
-            websiteUrl="cherryromance.vercel.app/book-bf"
-            userName={userName}
-          />
-        </div>
       </div>
     </div>
   );
