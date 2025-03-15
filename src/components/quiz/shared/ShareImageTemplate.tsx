@@ -130,7 +130,7 @@ const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
                 alignItems: "center",
                 justifyContent: "center",
                 boxShadow: "0 0 0 0 rgba(255, 135, 161, 0.7)",
-                animation: "glow 2s infinite",
+                animation: "glow 3s infinite",
               }}>
               LET'S GO
             </a>
@@ -139,13 +139,15 @@ const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
             {`
               @keyframes glow {
                 0% {
-                  box-shadow: 0 0 0 0 rgba(255, 135, 161, 0.7);
+                  box-shadow: 0 0 0 0 rgba(255, 135, 161, 0.1);
                 }
+                
                 50% {
-                  box-shadow: 0 0 30px 0 rgba(255, 135, 161, 0.4);
+                  box-shadow: 0 0 40px 10px rgba(255, 135, 161, 1);
                 }
+                
                 100% {
-                  box-shadow: 0 0 0 0 rgba(255, 135, 161, 0.7);
+                  box-shadow: 0 0 0 0 rgba(255, 135, 161, 0.1);
                 }
               }
             `}

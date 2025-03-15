@@ -63,7 +63,7 @@ export const generateQuizResults = async (answers: QuizAnswers) => {
       - Write a short summary of a romantic dynamic between ${answers.name} and A ${
     answers.food + " but " + answers.drink + " " + selectedManType
   } 
-      - Integrate some of the following elements (prioritizing conflict/drama): [${trope}, ${extraDetails}, can include locations, relationships, tropes, secrets, etc.] Add new elements to amplify drama and connection if needed. Ensure the ${
+      - Integrate some of the following elements, as long as they make sense to the story (prioritizing conflict/drama): [${trope}, ${extraDetails}, can include locations, relationships, tropes, secrets, etc.] Add new elements to amplify drama and connection if needed. Ensure the ${
     answers.food
   }, and ${
     answers.drink

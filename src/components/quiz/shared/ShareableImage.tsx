@@ -37,7 +37,7 @@ export const ShareableImage = ({
   imageSrc,
   mainTitle,
   description,
-  websiteUrl = "cherryromance.vercel.app/quiz/book-bf",
+  websiteUrl = "http://cherryromance.vercel.app/quiz/book-bf",
   fileName = "my-result.png",
   userName,
 }: ShareableImageProps) => {
@@ -102,7 +102,7 @@ export const ShareableImage = ({
       if (navigator.share) {
         await navigator.share({
           files: [file],
-          text: `Find your book boyfriend soulmate at: \n ${websiteUrl}`,
+          text: `Find your book boyfriend soulmate at: \n\n ${websiteUrl}`,
         });
         setShareSuccess(true);
         // Show success toast
