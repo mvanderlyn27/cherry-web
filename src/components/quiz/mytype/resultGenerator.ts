@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
 import { QuizAnswers } from "../types";
-import { quizQuestions, archetypes } from "./questions";
+import { quizQuestions, archetypes, extraInfo } from "./questions";
 
 export const generateQuizResults = async (answers: QuizAnswers) => {
   // Initialize results object with all possible characters
@@ -31,6 +31,10 @@ export const generateQuizResults = async (answers: QuizAnswers) => {
 
   // Get result details
   const selectedManType = archetypes[maxCharValue as keyof typeof archetypes];
+  const extraDetails = extraInfo[maxCharValue as keyof typeof archetypes];
+  const trope = quizQuestions
+    .find((val) => val.id === "trope")
+    ?.options?.find((val) => val.value === answers.trope)?.label;
   const selectedManImage = `/quiz/results/${maxCharValue.toUpperCase()}.jpg`;
 
   // Generate description using Gemini API
@@ -55,44 +59,24 @@ export const generateQuizResults = async (answers: QuizAnswers) => {
 
   const prompt = `
     Create a structured response with one field:
-    1. man_description: A detailed description of the male book boyfriend based on the quiz results
+    - man_description:
+      - Write a short summary of a romantic dynamic between ${answers.name} and A ${
+    answers.food + " but " + answers.drink + " " + selectedManType
+  } 
+      - Integrate some of the following elements (prioritizing conflict/drama): [${trope}, ${extraDetails}, can include locations, relationships, tropes, secrets, etc.] Add new elements to amplify drama and connection if needed. Ensure the ${
+    answers.food
+  }, and ${
+    answers.drink
+  } aspects of the ${selectedManType} is evident even if in conflict with the adjective, also don't explicitely repeat the adjective, use show don't tell.
+      - The description should be 40-50 words maximum.
+      - Focus on a central *conflict* and a strong initial *attraction/temptation*, even if dangerous. Show *vulnerability* on at least one side (or both).
+      - Avoid repeating words from this prompt.
+      - Start with: "The ${selectedManType}..." and continue the story from your point of view.
+      - Use third-person references for the ${selectedManType} ("he", "him"), avoid coming up with a name for him.
+      - The summary should imply a continuing story, not a resolved one.
 
-    Use these quiz results to craft your response:
-    Core Character Type: ${selectedManType}
-    Personality Traits: ${answers.food} and ${answers.drink}
-    Preferred Aesthetic: ${
-      quizQuestions.find((val) => val.id === "style")?.options?.find((val) => val.value === answers.style)?.label || ""
-    }
-    Favorite Romance Tropes: ${
-      quizQuestions.find((val) => val.id === "trope")?.options?.find((val) => val.value === answers.trope)?.label ||
-      "enemies to lovers"
-    }
-    Spirit Animal: ${
-      quizQuestions.find((val) => val.id === "animal")?.options?.find((val) => val.value === answers.animal)?.label ||
-      "cat"
-    }
-    Resonating Imagery: ${answers.vibe
-      .split(",")
-      .map(
-        (cur_vibe: string) =>
-          quizQuestions.find((val) => val.id === "vibe")?.options?.find((val) => val.value === cur_vibe)?.label ||
-          "diamonds"
-      )}
-    Additional Context:
-    - Username: ${answers.name || "Y/N"} 
-    - Age Range: ${answers.ageRange || "adult"}
-    - Drink of Choice: ${answers.drink}
-    - Food Preference: ${answers.food}
-
-    For the man_description:
-    - This should max 50 words
-    - This is a made up story of how the user and this man will meet and fall in love
-    - Use the information provided above as inspiration, but don't try to list it all out, maybe include 1-2 details
-    - avoid including names for the man, refer to him as "him" or "his", "your soulmate"
-
-    Format your response as a JSON object with this field.
-  `;
-
+    Format your response as a JSON object with this field.  `;
+  console.log("prompt", prompt);
   const result = await model.generateContent(prompt);
   const responseText = result.response.text();
   const parsedResponse = JSON.parse(responseText);

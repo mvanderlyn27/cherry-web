@@ -54,7 +54,10 @@ export const renderComponentToImage = async <P extends object>(
     // If the component is ShareImageTemplate, ensure it uses fixed mode
     let componentProps = { ...props };
     if (Component.name === "ShareImageTemplate" || Component.displayName === "ShareImageTemplate") {
-      componentProps = { ...componentProps, mode: "fixed" } as P;
+      componentProps = {
+        ...componentProps,
+        imageMode: true,
+      };
     }
 
     const element = React.createElement(Component, componentProps);

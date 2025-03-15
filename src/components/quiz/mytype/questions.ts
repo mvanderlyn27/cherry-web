@@ -110,3 +110,19 @@ export const archetypes = {
   m: "Mafia Boss",
   n: "Alpha Wolf",
 };
+export const extraInfo = {
+  a: "Hocker game, Locker room",
+  b: "Favorite spot, Dog",
+  c: "When brother's not home, Bed",
+  d: "Workshop, Muse, Dream",
+  e: "Office, Charity Dinner",
+  f: "Military, War, Gun",
+  g: "Library, Thesis",
+  h: "Mission, Target, Kidnap",
+  i: "Concert, Backstage",
+  j: "Castle, Blood, Fang",
+  k: "Castle, Sword, Battle",
+  l: "Late night ride, Helmet",
+  m: "Mansion, Weapon, Deal",
+  n: "Woods, Moon, Blood",
+};

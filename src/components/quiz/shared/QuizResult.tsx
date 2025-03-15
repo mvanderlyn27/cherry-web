@@ -94,7 +94,6 @@ export const QuizResult = ({
                 description={resultDescription || ""}
                 fileName="cherry-quiz-result.png"
                 userName={userName}
-                templateRef={templateRef as React.RefObject<HTMLDivElement>}
               />
             )}
           </div>

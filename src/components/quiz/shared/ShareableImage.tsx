@@ -19,11 +19,9 @@ interface ShareableImageProps {
   imageSrc: string;
   mainTitle: string;
   description: string;
-  storyText?: string;
   websiteUrl?: string;
   fileName?: string;
   userName: string;
-  templateRef?: React.RefObject<HTMLDivElement>;
 }
 
 /**
@@ -39,11 +37,9 @@ export const ShareableImage = ({
   imageSrc,
   mainTitle,
   description,
-  storyText,
   websiteUrl = "cherryromance.vercel.app",
   fileName = "my-result.png",
   userName,
-  templateRef,
 }: ShareableImageProps) => {
   const [generatedImageUrl, setGeneratedImageUrl] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
@@ -220,32 +216,6 @@ const ShareButton = ({ isLoading, onClick }: { isLoading: boolean; onClick: () =
       </>
     )}
   </button>
-);
-
-// New component for dialog content
-const ShareDialogContent = ({
-  imageUrl,
-  fileName,
-  onClose,
-}: {
-  imageUrl: string;
-  fileName: string;
-  onClose: () => void;
-}) => (
-  <DialogContent
-    className="bg-black/30 backdrop-blur-xl border border-white/10  h-auto flex flex-col"
-    aria-label="Share your results">
-    <DialogHeader>
-      <DialogTitle className="text-white text-center">Share Your Results</DialogTitle>
-    </DialogHeader>
-    <div className="flex-1 overflow-y-auto min-h-0 px-4">
-      <ImagePreview imageUrl={imageUrl} />
-    </div>
-    <div className="flex gap-4 justify-center p-4 mt-4 border-t border-white/10">
-      <DownloadButton imageUrl={imageUrl} fileName={fileName} />
-      <CopyButton imageUrl={imageUrl} />
-    </div>
-  </DialogContent>
 );
 
 // Download button component

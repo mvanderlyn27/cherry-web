@@ -9,11 +9,11 @@ interface ShareImageTemplateProps {
   websiteUrl: string;
   userName?: string;
   scale?: number;
+  imageMode?: boolean;
 }
 
 const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
-  ({ imageSrc, title, mainTitle, description, websiteUrl, userName, scale = 1 }, ref) => {
-    const navigate = useNavigate();
+  ({ imageSrc, title, mainTitle, description, websiteUrl, userName, scale = 1, imageMode = false }, ref) => {
     return (
       <div
         ref={ref}
@@ -102,31 +102,56 @@ const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
               backgroundRepeat: "no-repeat",
             }}
           />
-          <p
-            style={{
-              fontSize: "32px",
-              color: "#36242D",
-              fontFamily: "'Kaisei Decol', serif",
-            }}>
-            Wanna read the full story about you and him?
-          </p>
-          <button
-            onClick={() => navigate("/")}
-            style={{
-              fontFamily: "'Comme', sans-serif",
-              fontSize: "34px",
-              color: "#FF87A1",
-              cursor: "pointer",
-              backgroundColor: "white",
-              width: "395px",
-              height: "108px",
-              borderRadius: "9999px",
-              transition: "box-shadow 1.5s, transform 0.3s",
-              animation: "pulse-glow 2s ease-in-out infinite",
-              whiteSpace: "nowrap",
-            }}>
-            LET'S GO
-          </button>
+          {!imageMode && (
+            <p
+              style={{
+                fontSize: "32px",
+                color: "#36242D",
+                fontFamily: "'Kaisei Decol', serif",
+              }}>
+              Wanna read the full story about you and him?
+            </p>
+          )}
+          {!imageMode && (
+            <a
+              href="/"
+              style={{
+                fontFamily: "'Comme', sans-serif",
+                fontSize: "34px",
+                color: "#FF87A1",
+                cursor: "pointer",
+                backgroundColor: "white",
+                width: "395px",
+                height: "108px",
+                borderRadius: "9999px",
+                transition: "all 0.3s ease",
+                whiteSpace: "nowrap",
+                textAlign: "center",
+                textDecoration: "none",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                boxShadow: "0 0 0 0 rgba(255, 135, 161, 0.7)",
+                animation: "glow 2s infinite",
+              }}>
+              LET'S GO
+            </a>
+          )}
+          <style>
+            {`
+              @keyframes glow {
+                0% {
+                  box-shadow: 0 0 0 0 rgba(255, 135, 161, 0.7);
+                }
+                50% {
+                  box-shadow: 0 0 30px 0 rgba(255, 135, 161, 0.4);
+                }
+                100% {
+                  box-shadow: 0 0 0 0 rgba(255, 135, 161, 0.7);
+                }
+              }
+            `}
+          </style>
           <p
             style={{
               width: "100%",
@@ -139,12 +164,20 @@ const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
             }}>
             Find your Book Soulmate at:
             <br />
-            <a href="https://cherryromance.vercel.app/quiz/book-bf">cherryromance.vercel.app/quiz/book-bf</a>
+            <a
+              href="https://cherryromance.vercel.app/quiz/book-bf"
+              style={{
+                textDecoration: "underline",
+              }}>
+              cherryromance.vercel.app/quiz/book-bf
+            </a>
           </p>
         </div>
       </div>
     );
   }
 );
+
+ShareImageTemplate.displayName = "ShareImageTemplate";
 
 export default ShareImageTemplate;
