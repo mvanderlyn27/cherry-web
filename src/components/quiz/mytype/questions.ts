@@ -111,8 +111,8 @@ export const archetypes = {
   n: "Alpha Wolf",
 };
 export const extraInfo = {
-  a: "Hocker game, Locker room",
-  b: "Favorite spot, Dog",
+  a: "Hockey game, Locker room",
+  b: "Favorite spot, His dog",
   c: "When brother's not home, Bed",
   d: "Workshop, Muse, Dream",
   e: "Office, Charity Dinner",

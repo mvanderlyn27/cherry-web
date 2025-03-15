@@ -56,7 +56,7 @@ export const QuizResult = ({
               imageSrc={resultImage || ""}
               mainTitle={resultTitle}
               description={resultDescription || ""}
-              websiteUrl="cherryromance.vercel.app"
+              websiteUrl="cherryromance.vercel.app/quiz/book-bf"
               userName={userName}
             />
           </div>

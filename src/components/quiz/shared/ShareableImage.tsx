@@ -37,7 +37,7 @@ export const ShareableImage = ({
   imageSrc,
   mainTitle,
   description,
-  websiteUrl = "cherryromance.vercel.app",
+  websiteUrl = "cherryromance.vercel.app/quiz/book-bf",
   fileName = "my-result.png",
   userName,
 }: ShareableImageProps) => {
@@ -46,6 +46,16 @@ export const ShareableImage = ({
   const [isGenerating, setIsGenerating] = useState(false);
   const [imagePreloaded, setImagePreloaded] = useState(false);
   const [shareSuccess, setShareSuccess] = useState(false);
+
+  // Reset share success after delay
+  useEffect(() => {
+    if (shareSuccess) {
+      const timer = setTimeout(() => {
+        setShareSuccess(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [shareSuccess]);
 
   // Check if device is mobile
   const isMobileDevice = isMobile();
@@ -92,7 +102,7 @@ export const ShareableImage = ({
       if (navigator.share) {
         await navigator.share({
           files: [file],
-          text: `Find yours at ${websiteUrl}`,
+          text: `Find your book boyfriend soulmate at: \n ${websiteUrl}`,
         });
         setShareSuccess(true);
         // Show success toast
@@ -155,43 +165,52 @@ export const ShareableImage = ({
 
   return (
     <>
-      {shareSuccess && isMobileDevice ? (
-        <div className="flex items-center font-[Comme] text-sm bg-green-500/20 text-white px-6 py-2 rounded-full">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4 mr-2"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-          Shared!
+      <div className="relative">
+        <div
+          className={`transition-all duration-300 ${
+            shareSuccess ? "opacity-100 transform scale-100" : "opacity-0 transform scale-95"
+          } absolute inset-0`}>
+          <div className="flex items-center font-[Comme] text-sm bg-green-500/20 text-white px-6 py-2 rounded-full">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4 mr-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            Shared!
+          </div>
         </div>
-      ) : (
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          {!isMobileDevice ? (
-            <DialogTrigger asChild>
+        <div
+          className={`transition-all duration-300 ${
+            shareSuccess ? "opacity-0 transform scale-95" : "opacity-100 transform scale-100"
+          }`}>
+          <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            {!isMobileDevice ? (
+              <DialogTrigger asChild>
+                <ShareButton isLoading={isGenerating} onClick={handleGenerate} />
+              </DialogTrigger>
+            ) : (
               <ShareButton isLoading={isGenerating} onClick={handleGenerate} />
-            </DialogTrigger>
-          ) : (
-            <ShareButton isLoading={isGenerating} onClick={handleGenerate} />
-          )}
-          <DialogContent
-            className="bg-black/30 backdrop-blur-xl border border-white/10 max-h-[90vh] flex flex-col"
-            aria-label="Share your results">
-            <DialogHeader>
-              <DialogTitle className="text-white text-center">Share Your Results</DialogTitle>
-            </DialogHeader>
-            <div className="flex-1 overflow-y-auto min-h-0 px-4">
-              <ImagePreview imageUrl={generatedImageUrl} />
-            </div>
-            <div className="flex gap-4 justify-center p-4 mt-4 border-t border-white/10">
-              <DownloadButton imageUrl={generatedImageUrl} fileName={fileName} />
-              <CopyButton imageUrl={generatedImageUrl} />
-            </div>
-          </DialogContent>
-        </Dialog>
-      )}
+            )}
+            <DialogContent
+              className="bg-black/30 backdrop-blur-xl border border-white/10 max-h-[90vh] flex flex-col"
+              aria-label="Share your results">
+              <DialogHeader>
+                <DialogTitle className="text-white text-center">Share Your Results</DialogTitle>
+              </DialogHeader>
+              <div className="flex-1 overflow-y-auto min-h-0 px-4">
+                <ImagePreview imageUrl={generatedImageUrl} />
+              </div>
+              <div className="flex gap-4 justify-center p-4 mt-4 border-t border-white/10">
+                <DownloadButton imageUrl={generatedImageUrl} fileName={fileName} />
+                <CopyButton imageUrl={generatedImageUrl} />
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
+      </div>
     </>
   );
 };

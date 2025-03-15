@@ -63,10 +63,8 @@ const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
               style={{
                 fontSize: "70px",
                 paddingBottom: "8px",
-                fontWeight: 700,
                 fontFamily: "'Kaisei Decol', serif",
                 textShadow: "0px 0px 8px rgba(0,0,0,1)",
-                // filter property removed
               }}>
               {mainTitle}
             </h1>
