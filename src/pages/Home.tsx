@@ -1,8 +1,8 @@
 import { useState, FormEvent } from "react";
-import { LuPencil } from "react-icons/lu";
-import { FaPepperHot } from "react-icons/fa";
+import { LuBookHeart } from "react-icons/lu";
 import { FaPeopleGroup } from "react-icons/fa6";
-import { LuLibraryBig } from "react-icons/lu";
+import { FaMagnifyingGlass } from "react-icons/fa6";
+
 import { toast } from "sonner";
 
 // Add this import at the top
@@ -64,49 +64,63 @@ export function Home() {
   return (
     <div className="min-h-screen w-full overflow-x-hidden bg-[url('/BG.png')] bg-cover bg-center bg-no-repeat bg-fixed">
       {/* Hero Section */}
-      <div className="w-full py-8 px-4 md:px-0 min-h-screen flex items-center justify-center relative">
+      <div className="w-full py-8 px-4 md:px-8  min-h-screen flex items-center justify-center relative">
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-8 xl:gap-8 max-w-6xl w-full">
           {/* Left side - Title */}
           <div className="w-full flex flex-col relative gap-4 px-4 md:px-0">
-            <div className="w-fit relative">
-              <h1 className="text-8xl md:text-9xl lg:text-13xl xl:text-15xl bg-gradient-to-b from-[#E96F71] to-[#DE4447] text-transparent bg-clip-text font-['SansitaOne'] text-left">
+            {/* Title section - always at top */}
+            <div className="w-fit relative order-1">
+              <h1 className="text-7xl md:text-9xl lg:text-13xl xl:text-13xl bg-gradient-to-b from-[#E96F71] to-[#DE4447] text-transparent bg-clip-text font-['SansitaOne'] text-left">
                 Cherry
               </h1>
               <span className="absolute top-0 -right-18 text-[#9879BA] text-xs sm:text-sm tracking-wider font-[Kaisei_Decol]">
                 Coming Soon
               </span>
             </div>
-            <p className="text-md md:text-lg lg:text-xl xl:text-2xl text-[#542E2F] mb-6 md:mb-8 text-left font-[Kaisei_Decol]">
+            <p className="text-md md:text-lg lg:text-xl xl:text-2xl text-[#542E2F] mb-6 md:mb-8 text-left font-[Kaisei_Decol] font-normal md:font-bold order-2">
               Love, Drama, Desire
               <br />
               <br />
-              —Experience romantic stories like never before.
+              —Short n' sweet romantic stories
             </p>
-            <p className="text-sm md:text-md lg:text-lg xl:text-xl text-[#B25557] font-light mb-6 md:mb-8 text-left font-[Comme]">
-              Join our waitlist to gain exclusive early access.
-            </p>
-            <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-4 w-full max-w-full px-0">
-              <input
-                type="text"
-                placeholder="Enter email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full md:w-auto font-[Comme] bg-transparent border border-[#DE4447] text-[#B25557] px-4 py-2 md:p-2 rounded-full placeholder-[#B25557]/40 focus:outline-none focus:ring-2 focus:ring-[#DE4447]"
-                disabled={isLoading}
-              />
-              {error && <p className="text-red-400 text-sm">{error}</p>}
-              {success && <p className="text-green-400 text-sm">Successfully joined the waitlist!</p>}
-              <button
-                type="submit"
-                className="font-[Comme] text-sm text-light cursor-pointer bg-white text-[#DE4447] px-8 py-3 md:p-2 md:px-8 rounded-full transition-shadow duration-1500 animate-[pulse-glow_2s_ease-in-out_infinite] hover:pause-animation hover:shadow-[0_0_20px_3px_rgba(222, 68, 71,0.7)] hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:animate-none whitespace-nowrap"
-                disabled={isLoading}>
-                {isLoading ? "JOINING..." : "JOIN NOW"}
-              </button>
-            </form>
+
+            {/* Mobile carousel placement */}
+            <div className="w-full h-[500px] block md:hidden order-3 mb-6">
+              <div className="w-full h-full rounded-3xl">
+                <SwipeableCarousel images={demoImages} interval={4000} />
+              </div>
+            </div>
+
+            {/* Waitlist section - moves below carousel on mobile */}
+            <div className="order-4 md:order-3">
+              <p className="text-sm md:text-md lg:text-lg xl:text-xl text-[#B25557] font-light mb-6 md:mb-8 text-left font-[Comme]">
+                Join our waitlist to gain exclusive early access.
+              </p>
+              <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-4 w-full max-w-full px-0">
+                <input
+                  type="text"
+                  placeholder="your@email.com"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full md:w-auto font-[Comme] bg-transparent border border-[#DE4447] text-[#B25557] px-4 py-2 md:p-2 rounded-full placeholder-[#B25557]/40 focus:outline-none focus:ring-2 focus:ring-[#DE4447]"
+                  disabled={isLoading}
+                />
+                {error && <p className="text-red-400 text-sm">{error}</p>}
+                {success && <p className="text-green-400 text-sm">Successfully joined the waitlist!</p>}
+                <button
+                  type="submit"
+                  className="font-[Comme] text-sm text-light cursor-pointer bg-white text-[#DE4447] px-8 py-3 md:p-2 md:px-8 rounded-full transition-shadow duration-1500 animate-[pulse-glow_2s_ease-in-out_infinite] hover:pause-animation hover:shadow-[0_0_20px_3px_rgba(222, 68, 71,0.7)] hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:animate-none whitespace-nowrap"
+                  disabled={isLoading}>
+                  {isLoading ? "JOINING..." : "JOIN NOW"}
+                </button>
+              </form>
+            </div>
           </div>
-          <div className="w-full md:w-full h-[700px] md:h-[700px] relative">
-            <div className="absolute inset-0 rounded-3xl ">
+
+          {/* Desktop carousel - hidden on mobile */}
+          <div className="w-full md:w-full h-[700px] md:h-[800px] lg:h-[900px] relative hidden md:block">
+            <div className="absolute inset-0 rounded-3xl">
               <SwipeableCarousel images={demoImages} interval={4000} />
             </div>
           </div>
@@ -135,36 +149,33 @@ export function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Feature 1 */}
             <div className="bg-white/10 md:bg-transparent p-6 rounded-full md:rounded-none backdrop-blur-sm text-center w-[280px] h-[280px] mx-auto flex flex-col items-center justify-center md:w-auto md:h-auto md:p-8 md:block">
-              <h3 className="text-lg md:text-xl font-bold text-[#542E2F] mb-2 md:mb-4 font-[Kaisei_Decol]">
-                Unlimited Stories
+              <h3 className="text-lg md:text-2xl lg:text-3xl font-bold text-[#B25557] mb-2 md:mb-4 font-[Kaisei_Decol]">
+                Bite-Sized Stories
               </h3>
-              <LuLibraryBig className="w-10 h-10 md:w-10 md:h-10 mx-auto my-3 md:my-6 text-[#DE4447]" />
-              <p className="text-[#B25557] font-[Comme] text-sm md:text-md">
-                Read from thousands of curated <br /> or community stories
-              </p>
+              <LuBookHeart className="w-10 h-10 md:w-14 md:h-14 lg:w-16 lg:h-16 mx-auto my-3 md:my-6 text-[#DE4447]" />
+              <p className="text-[#B25557] font-[Comme] text-sm md:text-lg lg:text-xl">Read short stories on the go</p>
             </div>
 
             {/* Feature 2 */}
             <div className="bg-white/10 md:bg-transparent p-6 rounded-full md:rounded-none backdrop-blur-sm text-center w-[280px] h-[280px] mx-auto flex flex-col items-center justify-center md:w-auto md:h-auto md:p-8 md:block">
-              <h3 className="text-lg md:text-xl font-bold text-[#542E2F] mb-2 md:mb-4 font-[Kaisei_Decol]">
-                NSFW Content
+              <h3 className="text-lg md:text-2xl lg:text-3xl font-bold text-[#B25557] mb-2 md:mb-4 font-[Kaisei_Decol]">
+                Find Your Niche
               </h3>
-              <FaPepperHot className="w-10 h-10 md:w-10 md:h-10 mx-auto my-3 md:my-6 text-[#DE4447]" />
-              <p className="text-[#B25557] font-[Comme] text-sm md:text-md">
-                Zero boundaries,
-                <br /> endless possibilities
+              <FaMagnifyingGlass className="w-10 h-10 md:w-14 md:h-14 lg:w-16 lg:h-16 mx-auto my-3 md:my-6 text-[#DE4447]" />
+              <p className="text-[#B25557] font-[Comme] text-sm md:text-lg lg:text-xl">
+                We've got everything <br></br>nice or all the spice
               </p>
             </div>
+            
             {/* Feature 3 */}
             <div className="bg-white/10 md:bg-transparent p-6 rounded-full md:rounded-none backdrop-blur-sm text-center w-[280px] h-[280px] mx-auto flex flex-col items-center justify-center md:w-auto md:h-auto md:p-8 md:block">
-              <h3 className="text-lg md:text-xl font-bold text-[#542E2F] mb-2 md:mb-4 font-[Kaisei_Decol]">
-                Full Customization
+              <h3 className="text-lg md:text-2xl lg:text-3xl font-bold text-[#B25557] mb-2 md:mb-4 font-[Kaisei_Decol]">
+                Support Indie Authors
               </h3>
-              <LuPencil className="w-10 h-10 md:w-10 md:h-10 mx-auto my-3 md:my-6 text-[#DE4447]" />
-              <p className="text-[#B25557] font-[Comme] text-sm md:text-md">
+              <FaPeopleGroup className="w-10 h-10 md:w-14 md:h-14 lg:w-16 lg:h-16 mx-auto my-3 md:my-6 text-[#DE4447]" />
+              <p className="text-[#B25557] font-[Comme] text-sm md:text-lg lg:text-xl">
                 <br />
-                Choose what happens and
-                <br /> shape your own story
+                Engage and uplift amateur writers
               </p>
             </div>
           </div>
