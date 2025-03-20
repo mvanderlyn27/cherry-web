@@ -22,7 +22,7 @@ const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
           width: "1080px",
           height: "1920px",
           overflow: "hidden",
-          backgroundImage: "url('/quiz/results/bg.png')",
+          backgroundImage: "url('/BG.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -39,16 +39,42 @@ const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
             justifyContent: "space-between",
             padding: "60px 100px",
           }}>
+          {/* Replace the top divider with a row containing lines and icon */}
           <div
             style={{
               width: "90%",
-              height: "80px",
-              backgroundImage: "url('/quiz/results/divider_top.png')",
-              backgroundSize: "fill",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-            }}
-          />
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: "40px",
+              marginBottom: "20px",
+            }}>
+            <div
+              style={{
+                height: "2px",
+                backgroundColor: "#fff",
+                flex: 1,
+                marginRight: "20px",
+              }}
+            />
+            <img
+              src="/cherry_logo.png"
+              alt="Cherry Icon"
+              style={{
+                width: "60px",
+                height: "60px",
+              }}
+            />
+            <div
+              style={{
+                height: "2px",
+                backgroundColor: "#fff",
+                flex: 1,
+                marginLeft: "20px",
+              }}
+            />
+          </div>
+
           <div style={{ textAlign: "center", color: "white" }}>
             <h2
               style={{
@@ -63,8 +89,10 @@ const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
               style={{
                 fontSize: "80px",
                 paddingBottom: "8px",
-                fontFamily: "'Kaisei Decol', serif",
-                textShadow: "0px 0px 12px rgba(0,0,0,1)",
+                fontFamily: "'SansitaOne', serif",
+                fontWeight: 300,
+                color: "#DE4447",
+                // textShadow: "0px 0px 12px rgba(0,0,0,1)",
               }}>
               {mainTitle}
             </h1>
@@ -108,7 +136,7 @@ const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
                 fontFamily: "'Kaisei Decol', serif",
                 textAlign: "center",
               }}>
-              Want to read a romance story about you two?
+              Want to read your love story?
               <br />
               <br />
               <a
@@ -116,7 +144,7 @@ const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
                 style={{
                   textAlign: "center",
                   textDecoration: "underline",
-                  color: "#fff",
+                  color: "#E96F71",
                 }}>
                 cherryromance.vercel.app
               </a>

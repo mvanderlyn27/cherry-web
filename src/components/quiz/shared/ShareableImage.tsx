@@ -184,7 +184,7 @@ export const ShareableImage = ({
           className={`transition-all duration-300 ${
             shareSuccess ? "opacity-100 transform scale-100" : "opacity-0 transform scale-95"
           } absolute inset-0`}>
-          <div className="flex items-center font-[Comme] text-sm bg-green-500/20 text-white px-6 py-2 rounded-full">
+          <div className="flex items-center font-[Comme] text-sm bg-white text-[#DE4447] px-6 py-2 rounded-full">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-4 w-4 mr-2"
@@ -234,7 +234,7 @@ const ShareButton = ({ isLoading, onClick }: { isLoading: boolean; onClick: () =
   <button
     onClick={onClick}
     disabled={isLoading}
-    className={`flex items-center font-[Comme] text-sm cursor-pointer bg-white/10 text-white px-6 py-2 rounded-full transition-all duration-300 ${
+    className={`flex items-center font-[Comme] text-sm cursor-pointer bg-white text-[#DE4447] px-6 py-2 rounded-full transition-all duration-300 ${
       isLoading ? "opacity-50" : "hover:bg-white/20"
     }`}>
     {isLoading ? (

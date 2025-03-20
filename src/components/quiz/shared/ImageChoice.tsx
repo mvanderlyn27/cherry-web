@@ -52,7 +52,7 @@ export const ImageChoice = ({
 
   return (
     <div className="w-full animate-fadeIn">
-      <h3 className="text-xl md:text-2xl text-white font-[Kaisei_Decol] mb-2 text-center">{question}</h3>
+      <h3 className="text-xl md:text-2xl text-[#DE4447] font-['SansitaOne'] mb-4 md:mb-6 text-center">{question}</h3>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {options.map((option, index) => (
           <div
@@ -62,7 +62,7 @@ export const ImageChoice = ({
             onMouseLeave={() => setHoveredValue(null)}
             className={`relative cursor-pointer rounded-lg overflow-hidden transition-all duration-200 ${
               (allowMultiple ? selectedOptions.includes(option.value) : selectedValue === option.value)
-                ? "ring-4 ring-[#B87CED] scale-[1.02]"
+                ? "ring-4 ring-[#DE4447] scale-[1.02]"
                 : "hover:scale-[1.02]"
             }`}>
             <img

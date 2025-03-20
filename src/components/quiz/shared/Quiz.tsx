@@ -104,8 +104,8 @@ export const Quiz = ({ questions, onFinished, initialStep = 1, initialAnswers = 
           disabled={currentStep === 1}
           className={`px-6 py-2 rounded-full font-[Comme] text-sm transition-all duration-300 ${
             currentStep === 1
-              ? "bg-white/20 text-white/50 cursor-not-allowed"
-              : "bg-white/10 text-white hover:bg-white/20"
+              ? "bg-[#542E2F]/20 text-[#542E2F]/50 cursor-not-allowed"
+              : "bg-[#542E2F]/10 text-[#542E2F] hover:bg-[#542E2F]/20"
           }`}>
           Back
         </button>
@@ -115,8 +115,8 @@ export const Quiz = ({ questions, onFinished, initialStep = 1, initialAnswers = 
           disabled={!quizAnswers[questions[currentStep - 1].id]}
           className={`px-6 py-2 rounded-full font-[Comme] text-sm transition-all duration-300 ${
             !quizAnswers[questions[currentStep - 1].id]
-              ? "bg-white/20 text-white/50 cursor-not-allowed"
-              : "bg-white text-[#B87CED] hover:shadow-[0_0_10px_rgba(168,85,247,0.5)]"
+              ? "bg-[#542E2F]/20 text-[#542E2F]/50 cursor-not-allowed"
+              : "bg-white text-[#E96F71] hover:shadow-[0_0_10px_rgba(222, 68, 71,0.5)]"
           }`}>
           {currentStep < totalSteps ? "Next" : "See Results"}
         </button>

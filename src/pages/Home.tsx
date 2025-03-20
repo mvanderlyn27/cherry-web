@@ -69,20 +69,20 @@ export function Home() {
           {/* Left side - Title */}
           <div className="w-full flex flex-col relative gap-4 px-4 md:px-0">
             <div className="w-fit relative">
-              <h1 className="text-8xl md:text-9xl lg:text-13xl xl:text-15xl text-[#F5CCFF] font-[Pinyon_Script] text-left">
+              <h1 className="text-8xl md:text-9xl lg:text-13xl xl:text-15xl bg-gradient-to-b from-[#E96F71] to-[#DE4447] text-transparent bg-clip-text font-['SansitaOne'] text-left">
                 Cherry
               </h1>
-              <span className="absolute top-0 -right-18 text-white text-xs sm:text-sm tracking-wider font-[Kaisei_Decol]">
+              <span className="absolute top-0 -right-18 text-[#9879BA] text-xs sm:text-sm tracking-wider font-[Kaisei_Decol]">
                 Coming Soon
               </span>
             </div>
-            <p className="text-md md:text-lg lg:text-xl xl:text-2xl text-white mb-6 md:mb-8 text-left font-[Kaisei_Decol]">
+            <p className="text-md md:text-lg lg:text-xl xl:text-2xl text-[#542E2F] mb-6 md:mb-8 text-left font-[Kaisei_Decol]">
               Love, Drama, Desire
               <br />
               <br />
               —Experience romantic stories like never before.
             </p>
-            <p className="text-sm md:text-md lg:text-lg xl:text-xl text-white font-light mb-6 md:mb-8 text-left font-[Comme]">
+            <p className="text-sm md:text-md lg:text-lg xl:text-xl text-[#B25557] font-light mb-6 md:mb-8 text-left font-[Comme]">
               Join our waitlist to gain exclusive early access.
             </p>
             <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-4 w-full max-w-full px-0">
@@ -92,14 +92,14 @@ export function Home() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full md:w-auto font-[Comme] bg-transparent border border-[#B87CED] text-white px-4 py-2 md:p-2 rounded-full placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full md:w-auto font-[Comme] bg-transparent border border-[#DE4447] text-[#B25557] px-4 py-2 md:p-2 rounded-full placeholder-[#B25557]/40 focus:outline-none focus:ring-2 focus:ring-[#DE4447]"
                 disabled={isLoading}
               />
               {error && <p className="text-red-400 text-sm">{error}</p>}
               {success && <p className="text-green-400 text-sm">Successfully joined the waitlist!</p>}
               <button
                 type="submit"
-                className="font-[Comme] text-sm text-light cursor-pointer bg-white text-[#B87CED] px-8 py-3 md:p-2 md:px-8 rounded-full transition-shadow duration-1500 animate-[pulse-glow_2s_ease-in-out_infinite] hover:pause-animation hover:shadow-[0_0_20px_3px_rgba(168,85,247,0.7)] hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:animate-none whitespace-nowrap"
+                className="font-[Comme] text-sm text-light cursor-pointer bg-white text-[#DE4447] px-8 py-3 md:p-2 md:px-8 rounded-full transition-shadow duration-1500 animate-[pulse-glow_2s_ease-in-out_infinite] hover:pause-animation hover:shadow-[0_0_20px_3px_rgba(222, 68, 71,0.7)] hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:animate-none whitespace-nowrap"
                 disabled={isLoading}>
                 {isLoading ? "JOINING..." : "JOIN NOW"}
               </button>
@@ -116,8 +116,8 @@ export function Home() {
           onClick={() => window.scrollTo({ top: window.innerHeight, behavior: "smooth" })}
           className="absolute bottom-10  text-white hidden md:block"
           aria-label="Scroll down for more content">
-          <div className=" hover:scale-115 transition-all duration-300 shadow-[0_0_20px_3px_rgba(128,128,128,0.3)]  cursor-pointer rounded-full p-2 backdrop-blur-sm">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className=" hover:scale-115 transition-all duration-300 border-1 border-[#DE4447] cursor-pointer rounded-full p-2">
+            <svg className="w-6 h-6" fill="none" stroke="#DE4447" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
           </div>
@@ -126,7 +126,7 @@ export function Home() {
 
       {/* White Separator Line */}
       <div className="w-full flex items-center justify-center">
-        <div className="w-[40%] px-8 border-t border-white/50"></div>
+        <div className="w-[40%] px-8 border-t border-[#CE8C8D]"></div>
       </div>
 
       {/* Feature Sections */}
@@ -135,31 +135,33 @@ export function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Feature 1 */}
             <div className="bg-white/10 md:bg-transparent p-6 rounded-full md:rounded-none backdrop-blur-sm text-center w-[280px] h-[280px] mx-auto flex flex-col items-center justify-center md:w-auto md:h-auto md:p-8 md:block">
-              <h3 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-4 font-[Kaisei_Decol]">
+              <h3 className="text-lg md:text-xl font-bold text-[#542E2F] mb-2 md:mb-4 font-[Kaisei_Decol]">
                 Unlimited Stories
               </h3>
-              <LuLibraryBig className="w-10 h-10 md:w-10 md:h-10 mx-auto my-3 md:my-6 text-[#B87CED]" />
-              <p className="text-white font-[Comme] text-sm md:text-md">
+              <LuLibraryBig className="w-10 h-10 md:w-10 md:h-10 mx-auto my-3 md:my-6 text-[#DE4447]" />
+              <p className="text-[#B25557] font-[Comme] text-sm md:text-md">
                 Read from thousands of curated <br /> or community stories
               </p>
             </div>
 
             {/* Feature 2 */}
             <div className="bg-white/10 md:bg-transparent p-6 rounded-full md:rounded-none backdrop-blur-sm text-center w-[280px] h-[280px] mx-auto flex flex-col items-center justify-center md:w-auto md:h-auto md:p-8 md:block">
-              <h3 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-4 font-[Kaisei_Decol]">NSFW Content</h3>
-              <FaPepperHot className="w-10 h-10 md:w-10 md:h-10 mx-auto my-3 md:my-6 text-[#B87CED]" />
-              <p className="text-white font-[Comme] text-sm md:text-md">
+              <h3 className="text-lg md:text-xl font-bold text-[#542E2F] mb-2 md:mb-4 font-[Kaisei_Decol]">
+                NSFW Content
+              </h3>
+              <FaPepperHot className="w-10 h-10 md:w-10 md:h-10 mx-auto my-3 md:my-6 text-[#DE4447]" />
+              <p className="text-[#B25557] font-[Comme] text-sm md:text-md">
                 Zero boundaries,
                 <br /> endless possibilities
               </p>
             </div>
             {/* Feature 3 */}
             <div className="bg-white/10 md:bg-transparent p-6 rounded-full md:rounded-none backdrop-blur-sm text-center w-[280px] h-[280px] mx-auto flex flex-col items-center justify-center md:w-auto md:h-auto md:p-8 md:block">
-              <h3 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-4 font-[Kaisei_Decol]">
+              <h3 className="text-lg md:text-xl font-bold text-[#542E2F] mb-2 md:mb-4 font-[Kaisei_Decol]">
                 Full Customization
               </h3>
-              <LuPencil className="w-10 h-10 md:w-10 md:h-10 mx-auto my-3 md:my-6 text-[#B87CED]" />
-              <p className="text-white font-[Comme] text-sm md:text-md">
+              <LuPencil className="w-10 h-10 md:w-10 md:h-10 mx-auto my-3 md:my-6 text-[#DE4447]" />
+              <p className="text-[#B25557] font-[Comme] text-sm md:text-md">
                 <br />
                 Choose what happens and
                 <br /> shape your own story

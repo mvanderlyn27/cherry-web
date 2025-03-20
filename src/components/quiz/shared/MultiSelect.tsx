@@ -37,7 +37,7 @@ export const MultiSelect = ({ question, options, onSelect, selectedValue, maxSel
 
   return (
     <div className="w-full animate-fadeIn">
-      <h3 className="text-xl md:text-2xl text-white font-[Kaisei_Decol] mb-2 text-center">{question}</h3>
+      <h3 className="text-xl md:text-2xl text-[#DE4447] font-['SansitaOne'] mb-4 md:mb-6 text-center">{question}</h3>
       {maxSelections > 0 && (
         <p className="text-white/70 text-sm text-center mb-6">Select up to {maxSelections} options</p>
       )}
@@ -49,18 +49,18 @@ export const MultiSelect = ({ question, options, onSelect, selectedValue, maxSel
             onClick={() => handleOptionToggle(option.value)}
             className={`cursor-pointer p-4 rounded-lg transition-all duration-200 ${
               selectedOptions.includes(option.value)
-                ? "bg-[#B87CED]/40 border border-[#B87CED]"
-                : "bg-white/10 border border-white/20 hover:bg-white/20"
+                ? "bg-[#DE4447] border border-[#DE4447]"
+                : "bg-white border border-[#DE4447] hover:scale-105"
             }`}>
             <div className="flex items-center gap-3">
               <div
-                className={`w-5 h-5 rounded border flex items-center justify-center ${
-                  selectedOptions.includes(option.value) ? "border-[#B87CED] bg-[#B87CED]" : "border-white/40"
+                className={`w-5 h-5 rounded flex items-center justify-center ${
+                  selectedOptions.includes(option.value) ? "border-white bg-white" : "border-[#DE4447] border"
                 }`}>
                 {selectedOptions.includes(option.value) && (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-3 w-3 text-white"
+                    className={`h-3 w-3 ${selectedOptions.includes(option.value) ? "text-[#DE4447]" : "text-white"}`}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -68,7 +68,9 @@ export const MultiSelect = ({ question, options, onSelect, selectedValue, maxSel
                   </svg>
                 )}
               </div>
-              <span className="text-white">{option.label}</span>
+              <span className={`${selectedOptions.includes(option.value) ? "text-white" : "text-[#DE4447]"}`}>
+                {option.label}
+              </span>
             </div>
           </div>
         ))}

@@ -13,14 +13,14 @@ export const FormWizard = ({ currentStep, totalSteps }: FormWizardProps) => {
   return (
     <div className="w-full mb-8">
       <div className="flex justify-between items-center mb-2">
-        <span className="text-white font-[Comme] text-sm">
+        <span className="text-[#542E2F]font-[Comme] text-sm">
           Step {currentStep} of {totalSteps}
         </span>
-        <span className="text-white font-[Comme] text-sm">{percentComplete}% Complete</span>
+        <span className="text-[#542E2F] font-[Comme] text-sm">{percentComplete}% Complete</span>
       </div>
       <div className="w-full bg-white/20 rounded-full h-2.5">
         <div
-          className="bg-[#B87CED] h-2.5 rounded-full transition-all duration-500 ease-in-out"
+          className="bg-[#DE4447] h-2.5 rounded-full transition-all duration-500 ease-in-out"
           style={{ width: `${percentComplete}%` }}></div>
       </div>
     </div>

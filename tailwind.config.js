@@ -6,7 +6,10 @@ export default {
   ],
   theme: {
     extend: {
-      fontFamily: {},
+      fontFamily: {
+        'sansita': ['SansitaOne', 'sans-serif'],
+        // Add other custom fonts here
+      },
       animation: {
         'fadeIn': 'fadeIn 0.5s ease-in-out',
         'scaleIn': 'scaleIn 0.5s ease-in-out',

@@ -35,13 +35,15 @@ export const QuizResult = ({
   const scaledHeight = 1920 * scale;
 
   return (
-    <div className="w-full md:p-4  flex flex-col gap-4 justify-start soverflow-hidden animate-fadeIn">
+    <div className="w-full md:p-4  flex flex-col gap-4 justify-start overflow-hidden animate-fadeIn">
       {/* Container with explicit dimensions matching the scaled content */}
       <div
         className="relative  mx-auto rounded-lg overflow-hidden"
         style={{
           width: `${scaledWidth}px`,
           height: `${scaledHeight}px`,
+          borderRadius: "40px",
+          boxShadow: "0 0 10px rgba(0, 0, 0, 0.4)",
         }}>
         {/* The template with transform scale */}
         <div
@@ -67,7 +69,7 @@ export const QuizResult = ({
         {onRestart && (
           <button
             onClick={onRestart}
-            className="flex items-center font-[Comme] text-sm cursor-pointer bg-white/10 text-white px-6 py-2 rounded-full transition-all duration-300 hover:bg-white/20">
+            className="flex items-center font-[Comme] text-sm cursor-pointer bg-white text-[#DE4447] px-6 py-2 rounded-full transition-all duration-300 hover:bg-white/20">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-4 w-4 mr-2"
