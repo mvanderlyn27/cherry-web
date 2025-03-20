@@ -27,10 +27,10 @@ export const QuizUI = ({ generateResults }: { generateResults: (answer: QuizAnsw
       <div className="w-full min-h-screen flex items-center justify-center">
         {!showResult ? (
           <div className="max-w-3xl w-full bg-[#CE8C8D]/30 backdrop-blur-md p-6 md:p-10 rounded-2xl">
-            <h1 className="text-3xl md:text-5xl text-[#DE4447] font-[Pinyon_Script] text-center mb-2">
+            <h1 className="text-3xl md:text-5xl text-[#DE4447] font-['SansitaOne'] text-center mb-2">
               Discover Your Soulmate
             </h1>
-            <p className="text-542E2F font-[Comme] text-center mb-8">Find out what kind of man is your perfect match</p>
+            <p className="text-542E2F font-[Comme] text-center mb-8">Find your book boyfriend</p>
             <Quiz
               questions={quizQuestions}
               onFinished={generateResults}

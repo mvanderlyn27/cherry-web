@@ -37,7 +37,7 @@ export const MultiSelect = ({ question, options, onSelect, selectedValue, maxSel
 
   return (
     <div className="w-full animate-fadeIn">
-      <h3 className="text-xl md:text-2xl text-[#DE4447] font-['SansitaOne'] mb-4 md:mb-6 text-center">{question}</h3>
+      <h3 className="text-xl md:text-2xl text-white font-['SansitaOne'] mb-4 md:mb-6 text-center">{question}</h3>
       {maxSelections > 0 && (
         <p className="text-white/70 text-sm text-center mb-6">Select up to {maxSelections} options</p>
       )}

@@ -7,7 +7,7 @@ import { MultipleChoiceProps } from "../types";
 export const MultipleChoice = ({ question, options, onSelect, selectedValue }: MultipleChoiceProps) => {
   return (
     <div className="w-full animate-fadeIn">
-      <h3 className="text-xl md:text-2xl text-[#DE4447] font-['SansitaOne'] mb-4 md:mb-6 text-center">{question}</h3>
+      <h3 className="text-xl md:text-2xl text-white font-['SansitaOne'] mb-4 md:mb-6 text-center">{question}</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {options.map((option, index) => (
           <button

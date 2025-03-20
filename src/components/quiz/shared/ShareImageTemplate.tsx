@@ -136,7 +136,7 @@ const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
                 fontFamily: "'Kaisei Decol', serif",
                 textAlign: "center",
               }}>
-              Want to read your love story?
+              Read a love story of you two?
               <br />
               <br />
               <a
@@ -158,7 +158,7 @@ const ShareImageTemplate = forwardRef<HTMLDivElement, ShareImageTemplateProps>(
                 fontFamily: "'Kaisei Decol', serif",
                 textAlign: "center",
               }}>
-              Want to read your love story?
+              Read a love story of you two?
             </p>
           )}
           {!imageMode && (

@@ -63,7 +63,7 @@ export const SwipeableCarousel = ({ images, interval = 4000 }: SwipeableCarousel
             key={index}
             onClick={() => emblaApi?.scrollTo(index)}
             className={`h-2 rounded-full transition-all ${
-              index === currentIndex ? "w-6 bg-[#B87CED]" : "w-2 bg-white/50"
+              index === currentIndex ? "w-6 bg-[#DE4447]" : "w-2 bg-white/50"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
