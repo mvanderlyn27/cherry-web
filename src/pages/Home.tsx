@@ -73,11 +73,8 @@ export function Home() {
               <h1 className="text-[20vw] md:text-[10vw] bg-gradient-to-b from-[#E96F71] to-[#DE4447] text-transparent bg-clip-text font-['SansitaOne'] text-left mb-0">
                 Cherry
               </h1>
-              <span className="absolute top-[1vw] md:top-[2vw] right-0 text-[#9879BA] text-xs sm:text-xl tracking-wider font-[Kaisei_Decol]">
-                Coming Soon
-              </span>
             </div>
-            <p className="text-md md:text-[1.8vw] text-[#542E2F] mb-6 md:mb-8 text-left font-[Kaisei_Decol] font-normal md:font-bold order-2 -mt-2 md:-mt-10">
+            <p className="text-md md:text-[1.8vw] text-[#542E2F] mb-6 md:mb-8 text-left font-[Kaisei_Decol] font-normal md:font-bold order-2 -mt-2 md:-mt-8">
               Love, Drama, Desire
               <br />
               —Short n' sweet romantic stories
@@ -92,10 +89,14 @@ export function Home() {
 
             {/* Waitlist section - moves below carousel on mobile */}
             <div className="order-4 md:order-3">
-              <p className="text-sm md:text-xl lg:text-2xl xl:text-2xl text-[#B25557] font-light mb-6 md:mb-8 text-left font-[Comme]">
-                Join our waitlist to gain exclusive early access.
-              </p>
-              <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-4 w-full max-w-full px-0">
+              <div className="w-full flex items-center justify-center">
+                <a
+                  href="https://apps.apple.com/us/app/cherry-romance-stories/id6743647667"
+                  className="inline-block transition-transform duration-300 ease-in-out hover:scale-105">
+                  <img src={"/home/appstore.png"} className="w-48 sm:w-56 md:w-64 lg:w-72 xl:w-80" />
+                </a>
+              </div>
+              {/* <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-4 w-full max-w-full px-0">
                 <input
                   type="text"
                   placeholder="your@email.com"
@@ -113,7 +114,7 @@ export function Home() {
                   disabled={isLoading}>
                   {isLoading ? "JOINING..." : "JOIN NOW"}
                 </button>
-              </form>
+              </form> */}
             </div>
           </div>
 
